@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 import {
-    createPermission,
-    getAllPermissions,
-    getPermissionById,
-    updatePermission,
-    deletePermission
-} from '../controllers/permission.controller.js';
+  createPermission,
+  getAllPermissions,
+  getPermissionById,
+  updatePermission,
+  deletePermission,
+} from "../controllers/permission.controller.js";
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/create', createPermission);
+router.post("/create", createPermission);
 
 /**
  * @swagger
@@ -67,7 +67,7 @@ router.post('/create', createPermission);
  *       500:
  *         description: Internal server error
  */
-router.get('/', getAllPermissions);
+router.get("/", getAllPermissions);
 
 /**
  * @swagger
@@ -103,7 +103,7 @@ router.get('/', getAllPermissions);
  *       500:
  *         description: Internal server error
  */
-router.get('/:id', getPermissionById);
+router.get("/:id", getPermissionById);
 
 /**
  * @swagger
@@ -141,7 +141,7 @@ router.get('/:id', getPermissionById);
  *       500:
  *         description: Internal server error
  */
-router.patch('/:id', updatePermission);
+router.patch("/:id", updatePermission);
 
 /**
  * @swagger
@@ -164,6 +164,6 @@ router.patch('/:id', updatePermission);
  *       500:
  *         description: Internal server error
  */
-router.delete('/:id', deletePermission);
+router.delete("/:id", deletePermission);
 
 export default router;
