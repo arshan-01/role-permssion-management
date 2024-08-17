@@ -4,7 +4,7 @@ import { components } from 'react-select';
 
 // Options for the select dropdown
 const actionOptions = [
-    { value: 'view', label: 'View' },
+    { value: 'read', label: 'Read' },
     { value: 'create', label: 'Create' },
     { value: 'update', label: 'Update' },
     { value: 'delete', label: 'Delete' },
@@ -16,7 +16,7 @@ const EditPermissions = () => {
 
     // Sample selected permissions
     const selectedPermissions = [
-        'product-view',
+        'product-read',
         'product-create',
         'product-update',
         'product-updatesss',

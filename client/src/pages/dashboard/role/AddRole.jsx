@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getActionsList } from '../../../redux/features/permission/permission.service';
+import { useDispatch, useSelector } from "react-redux";
 
 const AddRole = () => {
+  const permissions = useSelector(state => state?.permission?.actionList) || [];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [roleTitle, setRoleTitle] = useState('');
   const [checkedPermissions, setCheckedPermissions] = useState({});
   const [globalChecks, setGlobalChecks] = useState({});
@@ -24,21 +28,21 @@ const AddRole = () => {
     return categories;
   };
 
-  const permissions = [
-    'dashboard-view',
-    'user-undo',
-    'user-create',
-    'product-view',
-    'product-create',
-    'product-update',
-    'role-create',
-    'role-update',
-    'role-delete',
-  ];
+  const effectRan = useRef(false); // UseRef to track if effect has run
 
+  useEffect(() => {
+    if (effectRan.current === false) {
+      dispatch(getActionsList());
+      effectRan.current = true; // Set the flag to true after first run
+    }
+
+    return () => {
+      effectRan.current = true; // This cleanup function ensures it only runs once in Strict Mode
+    };
+  }, [dispatch]);
   const categoriesAndActions = extractCategoriesAndActions(permissions);
   const actions = [...new Set(Object.values(categoriesAndActions).flat())];
-  const predefinedActions = ['view', 'create', 'update', 'delete']; // Define predefined actions
+  const predefinedActions = ['read', 'create', 'update', 'delete']; // Define predefined actions
 
   // Initialize globalChecks based on actions
   useEffect(() => {

@@ -1,4 +1,3 @@
-// models/role.model.js
 import mongoose from "mongoose";
 
 const roleSchema = new mongoose.Schema(
@@ -8,11 +7,10 @@ const roleSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    permissions: [
-      {
-        type: String,
-      },
-    ],
+    permissions: {
+      type: [String], // Define permissions as an array of strings
+      required: true, // Ensure permissions is required
+    },
   },
   { timestamps: true },
 );

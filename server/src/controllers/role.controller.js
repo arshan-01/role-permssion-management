@@ -6,6 +6,11 @@ import { ApiError, ApiResponse, asyncHandler } from "../utils/apiUtils.js";
 export const createRole = asyncHandler(async (req, res, next) => {
   const { name, permissions } = req.body;
   try {
+    // Check if role already exists
+    const roleExist = await Role.findOne ({ name });
+    if (roleExist) {
+      return next(new ApiError(400, "Role already exists"));
+    }
     const role = new Role({ name, permissions });
     await role.save();
     res
@@ -47,6 +52,12 @@ export const updateRole = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const { name, permissions } = req.body;
   try {
+    // Check if role already exists but exclude the current role
+    const roleExist = await Role.findOne({ name, _id: { $ne: id } });
+    if (roleExist) {
+      return next(new ApiError(400, "Role already exists"));
+    }
+    // Update role
     const role = await Role.findByIdAndUpdate(
       id,
       { name, permissions },

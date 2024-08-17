@@ -23,9 +23,9 @@ const EditRole = () => {
   };
 
   const permissions = [
-    'dashboard-view',
+    'dashboard-read',
     'user-create',
-    'product-view',
+    'product-read',
     'product-create',
     'product-update',
     'role-create',
@@ -35,18 +35,18 @@ const EditRole = () => {
 
  // User permissions
  const userPermissions = [
-    'dashboard-view',
+    'dashboard-read',
     'user-create',
     'user-update',
     'user-delete',
-    'product-view',
+    'product-read',
     'role-create',
     'role-delete',
 ];
 
   const categoriesAndActions = extractCategoriesAndActions(permissions);
   const actions = [...new Set(Object.values(categoriesAndActions).flat())];
-  const predefinedActions = ['view', 'create', 'update', 'delete']; // Define predefined actions
+  const predefinedActions = ['read', 'create', 'update', 'delete']; // Define predefined actions
 
   // Initialize globalChecks based on actions
   useEffect(() => {

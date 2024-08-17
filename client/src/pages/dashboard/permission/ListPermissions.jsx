@@ -5,7 +5,7 @@ import EditModal from '../../../components/modal/Modal';
 const permissionsArray = [
     { id: 1, module: 'product', actions: ['product-create', 'product-delete', 'product-update'] },
     { id: 2, module: 'user', actions: ['user-update', 'user-create'] },
-    { id: 3, module: 'order', actions: ['order-view', 'order-update'] },
+    { id: 3, module: 'order', actions: ['order-read', 'order-update'] },
     { id: 4, module: 'role', actions: ['role-create', 'role-update'] },
 ];
 

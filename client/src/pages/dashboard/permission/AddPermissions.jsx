@@ -6,7 +6,7 @@ import ListPermissions from './ListPermissions';
 
 // Options for the select dropdown
 const actionOptions = [
-  { value: 'view', label: 'View' },
+  { value: 'Read', label: 'Read' },
   { value: 'create', label: 'Create' },
   { value: 'update', label: 'Update' },
   { value: 'delete', label: 'Delete' },

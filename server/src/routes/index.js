@@ -1,19 +1,19 @@
 // Import all routes here and use them in the app
 // routes/index.js
 import express from "express";
-import permissionRoutes from "./permission.routes.js";
-import roleRoute from "./role.routes.js";
+import permissionRoute from "./permission.route.js";
+import roleRoute from "./role.route.js";
 // Import other route modules here
 // import userRoutes from './userRoutes.js';
 // import anotherRoutes from './anotherRoutes.js';
 
-const app = express.Router();
+const router = express.Router();
 
 // Define routes
-app.use('/permission', permissionRoutes);
-app.use("/role", roleRoute);
+router.use('/permission', permissionRoute);
+router.use('/role', roleRoute);
 // Add other routes here
 // router.use('/users', userRoutes);
 // router.use('/another', anotherRoutes);
 
-export default app;
+export default router;

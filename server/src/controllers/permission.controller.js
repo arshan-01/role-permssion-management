@@ -41,8 +41,6 @@ export const getPermissionsList = asyncHandler(async (req, res, next) => {
   try {
     const permissions = await Permission.find({}, 'actions'); // Retrieve only the 'actions' field
     const actionSet = new Set();
-
-    console.log("🚀 ~ getPermissionsList ~ actionList:", actionSet)
     // Flatten the actions array
     permissions.forEach(permission => {
       permission.actions.forEach(action => actionSet.add(action));
