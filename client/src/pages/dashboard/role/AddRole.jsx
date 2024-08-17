@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { useDispatch, useSelector } from "react-redux";
@@ -28,18 +28,11 @@ const AddRole = () => {
     return categories;
   };
 
-  const effectRan = useRef(false); // UseRef to track if effect has run
-
-  useEffect(() => {
-    if (effectRan.current === false) {
-      dispatch(getActionsList());
-      effectRan.current = true; // Set the flag to true after first run
-    }
-
-    return () => {
-      effectRan.current = true; // This cleanup function ensures it only runs once in Strict Mode
-    };
-  }, [dispatch]);
+  useEffect (() => {
+    // Get permissions from the API
+    dispatch(getActionsList())
+  }, []);
+  
   const categoriesAndActions = extractCategoriesAndActions(permissions);
   const actions = [...new Set(Object.values(categoriesAndActions).flat())];
   const predefinedActions = ['read', 'create', 'update', 'delete']; // Define predefined actions
