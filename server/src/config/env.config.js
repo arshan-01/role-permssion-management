@@ -16,6 +16,11 @@ const {
   CLIENT_URL,
 } = process.env;
 
+// Define Swagger stage URL based on environment
+const SWAGGER_STAGE_URL = NODE_ENV === 'production'
+  ? 'https://role-based-access-control.herokuapp.com'
+  : `http://localhost:${PORT}`;
+  
 // Export environment variables
 export {
   NODE_ENV,
@@ -27,4 +32,5 @@ export {
   PASSWORD,
   CORS_ORIGIN,
   CLIENT_URL,
+  SWAGGER_STAGE_URL,
 };

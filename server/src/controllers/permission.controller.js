@@ -36,6 +36,28 @@ export const getAllPermissions = asyncHandler(async (req, res, next) => {
   }
 });
 
+// Get action list of all permissions
+export const getPermissionsList = asyncHandler(async (req, res, next) => {
+  try {
+    const permissions = await Permission.find({}, 'actions'); // Retrieve only the 'actions' field
+    const actionSet = new Set();
+
+    console.log("🚀 ~ getPermissionsList ~ actionList:", actionSet)
+    // Flatten the actions array
+    permissions.forEach(permission => {
+      permission.actions.forEach(action => actionSet.add(action));
+    });
+
+    const actionList = Array.from(actionSet);
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, actionList, "Action list retrieved successfully"),
+      );
+  } catch (error) {
+    next(new ApiError(500, "Internal server error", [error.message]));
+  }
+});
 // Get permission by ID
 export const getPermissionById = asyncHandler(async (req, res, next) => {
   const { id } = req.params;

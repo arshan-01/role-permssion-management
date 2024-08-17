@@ -5,10 +5,10 @@ import {
   getPermissionById,
   updatePermission,
   deletePermission,
+  getPermissionsList,
 } from "../controllers/permission.controller.js";
 
 const router = express.Router();
-
 /**
  * @swagger
  * /permission/create:
@@ -68,7 +68,26 @@ router.post("/create", createPermission);
  *         description: Internal server error
  */
 router.get("/", getAllPermissions);
-
+/**
+ * @swagger
+ * /permission/actions-list:
+ *   get:
+ *     summary: Retrieve a flat list of all permission actions
+ *     tags: [Permissions]
+ *     responses:
+ *       200:
+ *         description: List of all permission actions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *                 example: "role-create"
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/actions-list", getPermissionsList);
 /**
  * @swagger
  * /permission/{id}:
