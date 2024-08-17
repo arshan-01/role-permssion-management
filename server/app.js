@@ -1,10 +1,10 @@
-// app.js
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./src/routes/index.js";
-import { swaggerServe, swaggerSetup } from "./swagger.js"; // Adjust the path as needed
 import { ApiError } from "./src/utils/apiUtils.js";
+import swaggerUi from "swagger-ui-express"; // Make sure this is imported
+import swaggerDocs from './swagger.js'; // Correct import
 
 const app = express();
 
@@ -20,8 +20,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.use("/api/v1", router); // This should match your API route structure
-app.use("/api/v1", swaggerServe, swaggerSetup);
+app.use(router); // Use the main router for your API routes
+
+// Use Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
