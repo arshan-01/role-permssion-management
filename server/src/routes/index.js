@@ -7,13 +7,13 @@ import roleRoute from "./role.routes.js";
 // import userRoutes from './userRoutes.js';
 // import anotherRoutes from './anotherRoutes.js';
 
-const router = express.Router();
+const app = express.Router();
 
 // Define routes
-router.use('/permission', permissionRoutes);
-router.use("/role", roleRoute);
+app.use('/permission', permissionRoutes);
+app.use("/role", roleRoute);
 // Add other routes here
 // router.use('/users', userRoutes);
 // router.use('/another', anotherRoutes);
 
-export default router;
+export default app;

@@ -1,9 +1,10 @@
+// src/routes/AppRouter.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AddRole from '../role/AddRole';
-import EditRole from '../role/EditRole';
-import AddPermissions from '../permission/AddPermissions';
-import EditPermissions from '../permission/EditPermissions';
+import AddRole from '../pages/dashboard/role/AddRole';
+import EditRole from '../pages/dashboard/role/EditRole';
+import AddPermissions from '../pages/dashboard/permission/AddPermissions';
+import EditPermissions from '../pages/dashboard/permission/EditPermissions';
 
 function AppRouter() {
   return (

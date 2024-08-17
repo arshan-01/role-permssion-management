@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EditModal from '../components/Modal';
+import EditModal from '../../../components/Modal';
 
 const permissionsArray = [
     { id: 1, module: 'product', actions: ['product-create', 'product-delete', 'product-update'] },

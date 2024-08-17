@@ -6,6 +6,10 @@ import { ApiError, ApiResponse, asyncHandler } from "../utils/apiUtils.js";
 export const createPermission = asyncHandler(async (req, res, next) => {
   const { module, actions } = req.body;
   try {
+    const permissionExist = await Permission.findOne({ module });
+    if (permissionExist) {
+      return next(new ApiError(400, "Permission already exists"));
+    }
     const permission = new Permission({ module, actions });
     await permission.save();
     res
