@@ -24,10 +24,23 @@ export const createRole = asyncHandler(async (req, res, next) => {
 // Get all roles
 export const getAllRoles = asyncHandler(async (req, res, next) => {
   try {
-    const roles = await Role.find();
+    const { currentPage = 1, limit = 10, search, filter } = req.query;
+    const query = {}; 
+    if (search) {
+      query.name = { $regex: search, $options: "i" };
+    }
+    if (filter) {
+      query.permissions = { $in: filter.split(",") };
+    }
+    const roles = await Role.find(query)
+      .limit(limit * 1)
+      .skip((currentPage - 1) * limit);
+    const total = await Role.countDocuments(query);
+    // count pages
+    const pages = Math.ceil(total / limit);
     res
       .status(200)
-      .json(new ApiResponse(200, roles, "Roles retrieved successfully"));
+      .json( new ApiResponse(200, { roles, total, pages }, "Roles retrieved successfully"));
   } catch (error) {
     next(new ApiError(500, "Internal server error", [error.message]));
   }

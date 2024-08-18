@@ -5,8 +5,8 @@ import api from '../../../utils/Api';
 import { config } from '../../../utils/EndPoints';
 
 // Thunks for role operations
-export const getRoles = createAsyncThunk('roles/getRoles', async () => {
-  return handleResponse(api.get(config.endPoints.getRoles));
+export const getRoles = createAsyncThunk('roles/getRoles', async ({search, filter, currentPage, limit }) => {
+  return handleResponse(api.get(config.endPoints.getRoles, { params: { search, filter, currentPage, limit } }));
 });
 
 export const getRoleById = createAsyncThunk('roles/getRoleById', async (id) => {
