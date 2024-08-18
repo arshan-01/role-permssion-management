@@ -1,4 +1,3 @@
-// src/utils/toastStyles.js
 export const toastStyles = {
     success: {
       background: '#E3FCEF', // Watery color with some transparency

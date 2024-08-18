@@ -9,7 +9,10 @@ export const getPermissions = createAsyncThunk('permissions/getPermissions', asy
 });
 
 export const getActionsList = createAsyncThunk('permissions/getActionsList', async () => {
-    return handleResponse(api.get(config.endPoints.getActionsList));
+    return handleResponse(api.get(config.endPoints.getActionsList),{
+        showSuccessToast: false,
+        showErrorToast: true
+    });
   });
   
 export const getPermissionById = createAsyncThunk('permissions/getPermissionById', async (id) => {

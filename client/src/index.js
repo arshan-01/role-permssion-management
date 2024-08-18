@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner'; // Import the Toaster component
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,8 +16,8 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={LoadingSpinner} persistor={persistor}>
         <App />
-        <Toaster />
-      </PersistGate>
+        <Toaster position="top-right" duration={4000} /> 
+        </PersistGate>
     </Provider>
   </React.StrictMode>
 );
