@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import DataTable from '../../../components/DataTable/DataTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRoles } from '../../../redux/features/role/role.service';
+import DataTable from '../../../components/DataTable/DataTable';
 
 const RoleList = () => {
     const dispatch = useDispatch();
     const roles = useSelector(state => state?.role?.roles?.roles) || [];
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
-    console.log("🚀 ~ RoleList ~ roles:", roles)
+
     const [searchQuery, setSearchQuery] = useState('');
     const [filter, setFilter] = useState({});
-
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortOrder, setSortOrder] = useState('asc');
 
     useEffect(() => {
         // Only perform the search if there's a search query
@@ -24,7 +24,9 @@ const RoleList = () => {
                     search: searchQuery,
                     limit: itemsPerPage,  
                     filter,
-                    currentPage
+                    currentPage,
+                    sortColumn,
+                    sortOrder
                 }));
             }, 1000);
     
@@ -36,60 +38,62 @@ const RoleList = () => {
                 search: searchQuery,
                 limit: itemsPerPage,  
                 filter,
-                currentPage
+                currentPage,
+                sortColumn,
+                sortOrder
             }));
         }
-    }, [searchQuery, filter, currentPage, itemsPerPage]);
+    }, [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder]);
     
-
-        const handleEdit = (role) => {
-            // Handle the edit logic (e.g., open a modal for editing)
-            console.log('Edit:', role);
-        };
-
-        const handleDelete = async (id) => {
-            await api.delete(`/roles/${id}`);
-            // Reload data after deletion
-            getRoles({ currentPage, itemsPerPage });
-        };
-
-        const handleItemsPerPageChange = (value) => {
-            setItemsPerPage(value);
-            setCurrentPage(1); // Reset to the first page
-        };
-
-        const handleSearch = (searchQuery) => {
-            setCurrentPage(1); // Reset to the first page
-        };
-
-        const handleFilter = (filter) => {
-            setCurrentPage(1); // Reset to the first page
-        };
-
-        const columns = [
-            { key: 'name', label: 'Role Name' },
-        ];
-
-        return (
-            <div className="container mx-auto p-4">
-                <h1 className="text-xl font-bold mb-4">Role List</h1>
-                <DataTable
-                    columns={columns}
-                    data={roles}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                    totalItems={totalItems}
-                    itemsPerPage={itemsPerPage}
-                    onItemsPerPageChange={handleItemsPerPageChange}
-                    setSearchQuery={setSearchQuery}
-                    searchQuery={searchQuery}
-                    onFilter={handleFilter}
-                    currentPage={currentPage}
-                    onPageChange={setCurrentPage}
-                    totalPages = {totalPages}
-                />
-            </div>
-        );
+    const handleEdit = (role) => {
+        console.log('Edit:', role);
     };
 
-    export default RoleList;
+    const handleDelete = async (id) => {
+        await api.delete(`/roles/${id}`);
+        dispatch(getRoles({ currentPage, itemsPerPage }));
+    };
+
+    const handleItemsPerPageChange = (value) => {
+        setItemsPerPage(value);
+        setCurrentPage(1); // Reset to the first page
+    };
+
+    const handleSort = (columnKey, order) => {
+        setSortColumn(columnKey);
+        setSortOrder(order);
+    };
+
+    const handleFilter = (newFilter) => {
+        setFilter(newFilter);
+        setCurrentPage(1); // Reset to the first page
+    };
+    const columns = [
+        { key: 'name', label: 'Role Name' },
+    ];
+    return (
+        <div className="container mx-auto p-4">
+            <h1 className="text-xl font-bold mb-4">Role List</h1>
+            <DataTable
+                columns={columns}
+                data={roles}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={handleItemsPerPageChange}
+                setSearchQuery={setSearchQuery}
+                searchQuery={searchQuery}
+                onFilter={handleFilter}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+                onSort={handleSort}
+                totalPages={totalPages}
+                sortColumn = {sortColumn}
+                sortOrder = {sortOrder}
+            />
+        </div>
+    );
+};
+
+export default RoleList;

@@ -7,7 +7,7 @@ export const createRole = asyncHandler(async (req, res, next) => {
   const { name, permissions } = req.body;
   try {
     // Check if role already exists
-    const roleExist = await Role.findOne ({ name });
+    const roleExist = await Role.findOne({ name });
     if (roleExist) {
       return next(new ApiError(400, "Role already exists"));
     }
@@ -22,9 +22,11 @@ export const createRole = asyncHandler(async (req, res, next) => {
 });
 
 // Get all roles
+// Get all roles
 export const getAllRoles = asyncHandler(async (req, res, next) => {
   try {
-    const { currentPage = 1, limit = 10, search, filter } = req.query;
+    const { currentPage = 1, limit = 10, search, filter, sortColumn, sortOrder } = req.query;
+    // Build the query object
     const query = {}; 
     if (search) {
       query.name = { $regex: search, $options: "i" };
@@ -32,19 +34,32 @@ export const getAllRoles = asyncHandler(async (req, res, next) => {
     if (filter) {
       query.permissions = { $in: filter.split(",") };
     }
+
+    // Build the sort object
+    const sort = {};
+    if (sortColumn && sortOrder) {
+      sort[sortColumn] = sortOrder === "asc" ? 1 : -1;
+    }
+
+    // Fetch roles with pagination and sorting
     const roles = await Role.find(query)
+      .sort(sort)  // Apply sorting here
       .limit(limit * 1)
       .skip((currentPage - 1) * limit);
+
     const total = await Role.countDocuments(query);
-    // count pages
+
+    // Calculate the total number of pages
     const pages = Math.ceil(total / limit);
+
     res
       .status(200)
-      .json( new ApiResponse(200, { roles, total, pages }, "Roles retrieved successfully"));
+      .json(new ApiResponse(200, { roles, total, pages }, "Roles retrieved successfully"));
   } catch (error) {
     next(new ApiError(500, "Internal server error", [error.message]));
   }
 });
+
 
 // Get role by ID
 export const getRoleById = asyncHandler(async (req, res, next) => {

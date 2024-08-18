@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaEdit, FaTrash, FaDownload, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaDownload, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
 
 const DataTable = ({
@@ -17,14 +17,20 @@ const DataTable = ({
   currentPage,
   onPageChange,
   totalPages,
+  sortColumn,
+  sortOrder,
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
+  const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+
   const [filters, setFilters] = useState(
     columns.reduce((acc, column) => ({ ...acc, [column.key]: '' }), {})
   );
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+  const handleSortIconClick = (key) => {
+    const newSortOrder = sortColumn === key && sortOrder === 'asc' ? 'desc' : 'asc';
+    onSort(key, newSortOrder);
+  };
+
 
   const handleRowSelect = (itemId) => {
     setSelectedRows((prev) => {
@@ -42,15 +48,6 @@ const DataTable = ({
     onFilter(newFilters);
   };
 
-  const handleSortIconClick = (key) => {
-    const newSortOrder = sortColumn === key && sortOrder === 'asc' ? 'desc' : 'asc';
-    setSortColumn(key);
-    setSortOrder(newSortOrder);
-    setActiveFilterColumn(key);
-    console.log(`Column: ${key}, Order: ${newSortOrder}`);
-    onSort(key, newSortOrder);
-  };
-
   const handleFilterIconClick = (key) => {
     setActiveFilterColumn(activeFilterColumn === key ? null : key);
   };
@@ -59,7 +56,7 @@ const DataTable = ({
   const pageNumbers = [];
   const maxPagesToShow = 5;
   // elipse for pagination
-  const elipse = '...'; 
+  const elipse = '...';
   if (totalPages <= maxPagesToShow) {
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
@@ -91,8 +88,8 @@ const DataTable = ({
       }
       pageNumbers.push(totalPages);
     }
-  } 
-  
+  }
+
   return (
     <div className="w-full">
       {/* Search */}
@@ -106,6 +103,15 @@ const DataTable = ({
           }}
           className="border rounded-lg p-2"
         />
+        <div>
+          <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-100 text-green-500 hover:bg-gray-200">
+            <IoDownload className="inline" size={20} />
+          </button>
+          <button onClick={downloadData} className="p-2 rounded-lg bg-gray-100 text-red-500 hover:bg-gray-200">
+            <FaTrash className="inline" size={20} />
+          </button>
+
+        </div>
       </div>
 
       {/* Table */}
@@ -128,22 +134,20 @@ const DataTable = ({
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm"
+                  className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm cursor-pointer"
+                  onClick={() => handleSortIconClick(column.key)}
                 >
                   <div className="flex items-center">
                     {column.label}
-                    <button
-                      onClick={() => handleSortIconClick(column.key)}
-                      className="ml-2 text-gray-500"
-                    >
-                      {sortColumn === column.key && sortOrder === 'asc' ? (
-                        <FaSortAmountUp />
-                      ) : sortColumn === column.key && sortOrder === 'desc' ? (
-                        <FaSortAmountDown />
-                      ) : (
-                        <FaSortAmountUp />
-                      )}
-                    </button>
+                    {sortColumn === column.key ? (
+                      <span className="ml-2">
+                        {sortOrder === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />}
+                      </span>
+                    ) :
+                      <span className="ml-2">
+                        {<FaSort />
+                        }
+                      </span>}
                   </div>
                 </th>
               ))}
@@ -187,22 +191,25 @@ const DataTable = ({
       {/* Pagination */}
       <div className="flex justify-between items-center mt-4">
         <div>
-          <label className="mr-2">Items per page:</label>
           <select
             value={itemsPerPage}
             onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-            className="border rounded-lg p-2"
+            className="border rounded-lg p-2 text-sm mr-4"
           >
             <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
           </select>
+          <span className='text-gray-500 text-sm'>
+            Showing {itemsPerPage * (currentPage - 1) + 1} to{' '}
+            {itemsPerPage * currentPage > data.length ? data.length : itemsPerPage * currentPage} of {data.length} entries
+          </span>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center justify-center text-sm">
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="mr-2 bg-gray-300 p-2 rounded-lg flex items-center"
+            className="mr-2 bg-gray-300 p-2 rounded-lg flex items-center justify-center"
           >
             <FaChevronLeft />
           </button>
@@ -227,11 +234,7 @@ const DataTable = ({
             <FaChevronRight />
           </button>
         </div>
-        <div>
-          <button onClick={downloadData} className="bg-green-500 text-white p-2 rounded-lg">
-            <IoDownload className="inline mr-1" />
-          </button>
-        </div>
+
       </div>
     </div>
   );
