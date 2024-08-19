@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRoles } from '../../../redux/features/role/role.service';
-import DataTable from '../../../components/DataTable/DataTable';
+import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
+import { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
+import components from '../../../components/Index';
+import { openModal } from '../../../redux/features/modal/modal.slice';
 
 const RoleList = () => {
     const dispatch = useDispatch();
+    const {DataTable} = components;
     const roles = useSelector(state => state?.role?.roles?.roles) || [];
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
 
@@ -49,10 +52,17 @@ const RoleList = () => {
         console.log('Edit:', role);
     };
 
-    const handleDelete = async (id) => {
-        await api.delete(`/roles/${id}`);
-        dispatch(getRoles({ currentPage, itemsPerPage }));
-    };
+    const { handleDeleteClick } = useGlobalDeleteHandler({
+        thunkFunction: deleteRole,
+        fetchFunction: getRoles,
+        fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder },
+        dispatch,
+        openModal: (modalConfig) => dispatch(openModal(modalConfig)),
+        componentName: 'DeleteConfirmation',
+        componentProps: {
+          // Additional props you might want to pass
+        },
+      });
 
     const handleItemsPerPageChange = (value) => {
         setItemsPerPage(value);
@@ -71,6 +81,7 @@ const RoleList = () => {
     const columns = [
         { key: 'name', label: 'Role Name' },
     ];
+ 
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-xl font-bold mb-4">Role List</h1>
@@ -78,7 +89,7 @@ const RoleList = () => {
                 columns={columns}
                 data={roles}
                 onEdit={handleEdit}
-                onDelete={handleDelete}
+                onDelete={handleDeleteClick}
                 totalItems={totalItems}
                 itemsPerPage={itemsPerPage}
                 onItemsPerPageChange={handleItemsPerPageChange}

@@ -8,6 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import { Toaster } from 'sonner'; // Import the Toaster component
+import GlobalModal from './components/Modal/GlobalModal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,7 +17,8 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={LoadingSpinner} persistor={persistor}>
         <App />
-        <Toaster position="top-right" duration={4000} /> 
+        <GlobalModal />
+        <Toaster expand={true} position="top-right" duration={4000} /> 
         </PersistGate>
     </Provider>
   </React.StrictMode>

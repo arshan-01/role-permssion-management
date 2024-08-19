@@ -113,7 +113,12 @@ const DataTable = ({
 
         </div>
       </div>
-
+        {
+          // Check if the data is empty
+          data.length === 0 ? (
+            <p className="text-center">No data found</p>
+          ) : (
+            <>
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
@@ -129,13 +134,13 @@ const DataTable = ({
                       setSelectedRows([]);
                     }
                   }}
-                />
+                  />
               </th>
               {columns.map((column) => (
                 <th
-                  key={column.key}
-                  className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm cursor-pointer"
-                  onClick={() => handleSortIconClick(column.key)}
+                key={column.key}
+                className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm cursor-pointer"
+                onClick={() => handleSortIconClick(column.key)}
                 >
                   <div className="flex items-center">
                     {column.label}
@@ -144,7 +149,7 @@ const DataTable = ({
                         {sortOrder === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />}
                       </span>
                     ) :
-                      <span className="ml-2">
+                    <span className="ml-2">
                         {<FaSort />
                         }
                       </span>}
@@ -164,12 +169,12 @@ const DataTable = ({
                     type="checkbox"
                     checked={selectedRows.includes(row.id)}
                     onChange={() => handleRowSelect(row.id)}
-                  />
+                    />
                 </td>
                 {columns.map((column) => (
                   <td
-                    key={column.key}
-                    className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm"
+                  key={column.key}
+                  className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm"
                   >
                     {row[column.key]}
                   </td>
@@ -178,7 +183,7 @@ const DataTable = ({
                   <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
                     <FaEdit />
                   </button>
-                  <button onClick={() => onDelete(row.id)} className="text-red-500">
+                  <button onClick={() => onDelete(row._id)} className="text-red-500">
                     <FaTrash />
                   </button>
                 </td>
@@ -195,7 +200,7 @@ const DataTable = ({
             value={itemsPerPage}
             onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
             className="border rounded-lg p-2 text-sm mr-4"
-          >
+            >
             <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
@@ -210,7 +215,7 @@ const DataTable = ({
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className="mr-2 bg-gray-300 p-2 rounded-lg flex items-center justify-center"
-          >
+            >
             <FaChevronLeft />
           </button>
           {pageNumbers.map((pageNumber, index) =>
@@ -218,9 +223,9 @@ const DataTable = ({
               <span key={index} className="mr-2">...</span>
             ) : (
               <button
-                key={index}
-                onClick={() => onPageChange(pageNumber)}
-                className={`mr-2 p-2 rounded-lg ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+              key={index}
+              onClick={() => onPageChange(pageNumber)}
+              className={`mr-2 p-2 rounded-lg ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
               >
                 {pageNumber}
               </button>
@@ -230,12 +235,16 @@ const DataTable = ({
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className="bg-gray-300 p-2 rounded-lg flex items-center"
-          >
+            >
             <FaChevronRight />
           </button>
         </div>
 
       </div>
+        </>
+          )
+
+        }
     </div>
   );
 };

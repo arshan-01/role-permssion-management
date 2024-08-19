@@ -19,6 +19,7 @@ const roleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Get Roles
       .addCase(getRoles.pending, (state) => {
         state.status = 'loading';
       })
@@ -30,6 +31,7 @@ const roleSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      // Get Role by ID
       .addCase(getRoleById.pending, (state) => {
         state.status = 'loading';
       })
@@ -41,17 +43,41 @@ const roleSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+
+      // Create Role
+      .addCase(createRole.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(createRole.fulfilled, (state, action) => {
-        state.roles.push(action.payload);
+        state.status = 'succeeded';
+      })
+      .addCase(createRole.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+
+      // Update Role
+      .addCase(updateRole.pending, (state) => {
+        state.status = 'loading';
       })
       .addCase(updateRole.fulfilled, (state, action) => {
-        const index = state.roles.findIndex(role => role._id === action.payload._id);
-        if (index !== -1) {
-          state.roles[index] = action.payload;
-        }
+        state.status = 'succeeded';
+      })
+      .addCase(updateRole.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+
+      // Delete Role
+      .addCase(deleteRole.pending, (state) => {
+        state.status = 'loading';
       })
       .addCase(deleteRole.fulfilled, (state, action) => {
-        state.roles = state.roles.filter(role => role._id !== action.payload._id);
+        state.status = 'succeeded';
+      })
+      .addCase(deleteRole.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   }
 });
