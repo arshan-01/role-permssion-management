@@ -3,12 +3,12 @@ import React from 'react';
 function StatusBadge({ status, role }) {
   const getRandomColor = () => {
     const colors = [
-      'bg-blue-400/5 text-blue-600',
-      'bg-green-400/5 text-green-600',
-      'bg-yellow-400/5 text-yellow-600',
-      'bg-red-400/5 text-red-600',
-      'bg-purple-400/5 text-purple-600',
-      'bg-pink-400/5 text-pink-600',
+      'bg-blue-400/5 text-blue-600 text-sm',
+      'bg-green-400/5 text-green-600 text-sm',
+      'bg-yellow-400/5 text-yellow-600 text-sm',
+      'bg-red-400/5 text-red-600 text-sm',
+      'bg-purple-400/5 text-purple-600 text-sm',
+      'bg-pink-400/5 text-pink-600 text-sm',
     ];
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
@@ -17,10 +17,10 @@ function StatusBadge({ status, role }) {
   const getStyle = () => {
     // Define styles for status
     const statusStyles = {
-      active: 'bg-green-600/5 text-green-600',
-      inactive: 'bg-red-600/5 text-red-600',
-      Pending: 'bg-yellow-600/5 text-yellow-600',
-      Suspended: 'bg-gray-600/5 text-gray-600',
+      active: 'bg-green-600/5 text-green-600 text-sm',
+      inactive: 'bg-red-600/5 text-red-600 text-sm',
+      Pending: 'bg-yellow-600/5 text-yellow-600 text-sm',
+      Suspended: 'bg-gray-600/5 text-gray-600 text-sm',
     };
 
     // Apply random color for roles if a role is provided
