@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaEdit, FaTrash, FaDownload, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort, FaRegEdit } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
-
+import StatusBadge from './StatusBadge';
+import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
+import Pagination from './Pagination';
 const DataTable = ({
   columns,
   data,
@@ -69,44 +71,6 @@ const DataTable = ({
     setActiveFilterColumn(activeFilterColumn === key ? null : key);
   };
 
-  // Pagination calculations
-  const pageNumbers = [];
-  const maxPagesToShow = 5;
-  // elipse for pagination
-  const elipse = '...';
-  if (totalPages <= maxPagesToShow) {
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
-  } else {
-    const halfPagesToShow = Math.floor(maxPagesToShow / 2);
-    let startPage = currentPage - halfPagesToShow;
-    let endPage = currentPage + halfPagesToShow;
-    if (startPage <= 0) {
-      startPage = 1;
-      endPage = maxPagesToShow;
-    }
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = totalPages - maxPagesToShow + 1;
-    }
-    if (startPage > 1) {
-      pageNumbers.push(1);
-      if (startPage > 2) {
-        pageNumbers.push(elipse);
-      }
-    }
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        pageNumbers.push(elipse);
-      }
-      pageNumbers.push(totalPages);
-    }
-  }
-
   return (
     <div className="w-full">
       {/* Search */}
@@ -129,132 +93,104 @@ const DataTable = ({
           </button>
         </div>
       </div>
-        {
-          // Check if the data is empty
-          data.length === 0 ? (
-            <p className="text-center">No data found</p>
-          ) : (
-            <>
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="py-2 px-4 border-b border-gray-200">
-                <input
-                  ref={selectAllRef}
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                />
-              </th>
-              {columns.map((column) => (
-                <th
-                key={column.key}
-                className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm cursor-pointer"
-                onClick={() => handleSortIconClick(column.key)}
-                >
-                  <div className="flex items-center">
-                    {column.label}
-                    {sortColumn === column.key ? (
-                      <span className="ml-2">
-                        {sortOrder === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />}
-                      </span>
-                    ) :
-                    <span className="ml-2">
-                        {<FaSort />
-                        }
-                      </span>}
-                  </div>
-                </th>
-              ))}
-              <th className="py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-sm">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.map((row, rowIndex) => (
-              <tr key={rowIndex} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b border-gray-200">
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(row._id)}
-                    onChange={() => handleRowSelect(row._id)}
-                    />
-                </td>
-                {columns.map((column) => (
-                  <td
-                  key={column.key}
-                  className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm"
-                  >
-                    {row[column.key]}
-                  </td>
-                ))}
-                <td className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm">
-                  <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
-                    <FaEdit />
-                  </button>
-                  <button onClick={() => onDelete(row._id)} className="text-red-500">
-                    <FaTrash />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {
+        // Check if the data is empty
+        data.length === 0 ? (
+          <p className="text-center">No data found</p>
+        ) : (
+          <>
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-50 rounded-lg shadow-sm">
+                <thead>
+                  <tr className="bg-gray-50 text-left uppercase">
+                    <th className="py-2 px-4 border-b border-gray-200">
+                      <input
+                        ref={selectAllRef}
+                        type="checkbox"
+                        onChange={handleSelectAll}
+                      />
+                    </th>
+                    {columns.map((column) => (
+                      <th
+                        key={column.key}
+                        className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-xs cursor-pointer"
+                        onClick={() => handleSortIconClick(column.key)}
+                      >
+                        <div className="flex items-center">
+                          {column.label}
+                          {sortColumn === column.key ? (
+                            <span className="ml-2 flex flex-col items-center justify-center">
+                              <FaSortUp className={`${sortOrder === 'asc' ? 'text-black' : 'text-gray-400'} -mb-1`} />
+                              <FaSortDown className={`${sortOrder === 'desc' ? 'text-black' : 'text-gray-400'} -mt-1`} />
+                            </span>
+                          ) : (
+                            <span className="ml-2">
+                              <FaSort className="text-gray-400" />
+                            </span>
+                          )}
+                        </div>
+                      </th>
+                    ))}
+                    <th className="py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-xs">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.map((row, rowIndex) => (
+                    <tr key={rowIndex} className="hover:bg-gray-50">
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.includes(row._id)}
+                          onChange={() => handleRowSelect(row._id)}
+                        />
+                      </td>
+                      {columns.map((column) => (
+                        <td
+                          key={column.key}
+                          className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm"
+                        >
+                          {column.key === 'avatar' ? (
+                            <div className="flex items-center">
+                              <img src={row[column.key]} alt="avatar" className="mr-2 h-8 rounded-full inline-block" />
+                              {row.name}
+                            </div>
+                          ) : column.key === 'status' ? (
+                            <StatusBadge status={row.status} />
+                          ) : column.key === 'role' ? (
+                            <StatusBadge role={row.role} />
+                          ) : (
+                            row[column.key]
+                          )}
+                        </td>
+                      ))}
+                      <td className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm">
+                        <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
+                        <FaRegEdit />
+                        </button>
+                        <button onClick={() => onDelete(row._id)} className="text-red-500">
+                          <FaRegTrashCan />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-      {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div>
-          <select
-            value={itemsPerPage}
-            onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-            className="border rounded-lg p-2 text-sm mr-4"
-            >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-          </select>
-          <span className='text-gray-500 text-sm'>
-            Showing {itemsPerPage * (currentPage - 1) + 1} to{' '}
-            {itemsPerPage * currentPage > data.length ? data.length : itemsPerPage * currentPage} of {data.length} entries
-          </span>
-        </div>
-        <div className="flex items-center justify-center text-sm">
-          <button
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="mr-2 bg-gray-300 p-2 rounded-lg flex items-center justify-center"
-            >
-            <FaChevronLeft />
-          </button>
-          {pageNumbers.map((pageNumber, index) =>
-            pageNumber === '...' ? (
-              <span key={index} className="mr-2 p-2 text-gray-500">
-                {pageNumber}
-              </span>
-            ) : (
-              <button
-                key={pageNumber}
-                onClick={() => onPageChange(pageNumber)}
-                className={`mr-2 p-2 rounded-lg ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
-                >
-                {pageNumber}
-              </button>
-            )
-          )}
-          <button
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="bg-gray-300 p-2 rounded-lg flex items-center justify-center"
-            >
-            <FaChevronRight />
-          </button>
-        </div>
-      </div>
-        </>
-        )}
+            {/* Pagination */}
+            <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+        itemsPerPage = {itemsPerPage}
+        onItemsPerPageChange = {onItemsPerPageChange}
+      />
+          </>
+        )
+      }
     </div>
   );
 };

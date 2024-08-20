@@ -1,80 +1,109 @@
-import clsx from 'clsx'
+import React from 'react';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa'; // Import icons from react-icons
 
-import { Button } from './button'
+const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handleItemsPerPageChange }) => {
+  // Handle page change
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      onPageChange(page);
+    }
+  };
 
-export function Pagination({ 'aria-label': ariaLabel = 'Page navigation', className, ...props }) {
-  return <nav aria-label={ariaLabel} {...props} className={clsx(className, 'flex gap-x-2')} />
-}
+  // Generate page numbers
+  const pageNumbers = [];
+  const maxPagesToShow = 5;
+  const elipse = '...';
 
-export function PaginationPrevious({ href = null, className, children = 'Previous' }) {
+  if (totalPages <= maxPagesToShow) {
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+  } else {
+    const halfPagesToShow = Math.floor(maxPagesToShow / 2);
+    let startPage = currentPage - halfPagesToShow;
+    let endPage = currentPage + halfPagesToShow;
+
+    if (startPage <= 0) {
+      startPage = 1;
+      endPage = maxPagesToShow;
+    }
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = totalPages - maxPagesToShow + 1;
+    }
+    if (startPage > 1) {
+      pageNumbers.push(1);
+      if (startPage > 2) {
+        pageNumbers.push(elipse);
+      }
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pageNumbers.push(elipse);
+      }
+      pageNumbers.push(totalPages);
+    }
+  }
+
   return (
-    <span className={clsx(className, 'grow basis-0')}>
-      <Button {...(href === null ? { disabled: true } : { href })} plain aria-label="Previous page">
-        <svg className="stroke-current" data-slot="icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M2.75 8H13.25M2.75 8L5.25 5.5M2.75 8L5.25 10.5"
-            strokeWidth={1.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        {children}
-      </Button>
-    </span>
-  )
-}
+    <div className="dataTable-bottom flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div className='flex justify-around items-center'>
+    <div className="items-per-page mr-9">
+          <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page:</label>
+          <select
+            id="items-per-page"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="ml-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            {[10, 20, 30, 50].map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      <div className="dataTable-info text-sm text-gray-500">
+        Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to <span className="font-medium">{Math.min(currentPage * 10, 12)}</span> of <span className="font-medium">{totalPages * 10}</span> entries
+      </div>
+    </div>
+      <nav className="dataTable-pagination">
+        <ul className="dataTable-pagination-list flex items-center space-x-2">
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-gray-100 rounded-md disabled:opacity-50"
+            >
+              <FaChevronLeft />
+            </button>
+          </li>
+          {pageNumbers.map((page, index) => (
+            <li key={index}>
+              <button
+                onClick={() => handlePageChange(page)}
+                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100'} rounded-md`}
+              >
+                {page === elipse ? '...' : page}
+              </button>
+            </li>
+          ))}
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-gray-100 rounded-md disabled:opacity-50"
+            >
+              <FaChevronRight />
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
 
-export function PaginationNext({ href = null, className, children = 'Next' }) {
-  return (
-    <span className={clsx(className, 'flex grow basis-0 justify-end')}>
-      <Button {...(href === null ? { disabled: true } : { href })} plain aria-label="Next page">
-        {children}
-        <svg className="stroke-current" data-slot="icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M13.25 8L2.75 8M13.25 8L10.75 10.5M13.25 8L10.75 5.5"
-            strokeWidth={1.5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Button>
-    </span>
-  )
-}
-
-export function PaginationList({ className, ...props }) {
-  return <span {...props} className={clsx(className, 'hidden items-baseline gap-x-2 sm:flex')} />
-}
-
-export function PaginationPage({ href, className, current = false, children }) {
-  return (
-    <Button
-      href={href}
-      plain
-      aria-label={`Page ${children}`}
-      aria-current={current ? 'page' : undefined}
-      className={clsx(
-        className,
-        'min-w-[2.25rem] before:absolute before:-inset-px before:rounded-lg',
-        current && 'before:bg-zinc-950/5 dark:before:bg-white/10'
-      )}
-    >
-      <span className="-mx-0.5">{children}</span>
-    </Button>
-  )
-}
-
-export function PaginationGap({ className, children = <>&hellip;</>, ...props }) {
-  return (
-    <span
-      aria-hidden="true"
-      {...props}
-      className={clsx(
-        className,
-        'w-[2.25rem] select-none text-center text-sm/6 font-semibold text-zinc-950 dark:text-white'
-      )}
-    >
-      {children}
-    </span>
-  )
-}
+export default Pagination;

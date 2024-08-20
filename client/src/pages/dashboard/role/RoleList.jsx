@@ -17,7 +17,7 @@ const RoleList = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
     const [sortColumn, setSortColumn] = useState(null);
-    const [sortOrder, setSortOrder] = useState('asc');
+    const [sortOrder, setSortOrder] = useState('');
 
     useEffect(() => {
         // Only perform the search if there's a search query
@@ -79,15 +79,68 @@ const RoleList = () => {
         setCurrentPage(1); // Reset to the first page
     };
     const columns = [
-        { key: 'name', label: 'Role Name' },
-    ];
- 
+        { key: 'avatar', label: 'Avatar' },
+        { key: 'name', label: 'Name' },
+        { key: 'email', label: 'Email' },
+        { key: 'role', label: 'Role' },
+        { key: 'status', label: 'Status' },
+        { key: 'createdAt', label: 'Created At' },
+      ];
+      
+      const data = [
+        {
+          _id: '1',
+          avatar: 'https://via.placeholder.com/40', // Sample avatar URL
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          role: 'Admin',
+          status: 'Suspended',
+          createdAt: '2024-08-01',
+        },
+        {
+          _id: '2',
+          avatar: 'https://via.placeholder.com/40', // Sample avatar URL
+          name: 'Jane Smith',
+          email: 'jane.smith@example.com',
+          role: 'User',
+          status: 'Inactive',
+          createdAt: '2024-08-02',
+        },
+        {
+          _id: '3',
+          avatar: 'https://via.placeholder.com/40', // Sample avatar URL
+          name: 'Alice Johnson',
+          email: 'alice.johnson@example.com',
+          role: 'Editor',
+          status: 'Pending',
+          createdAt: '2024-08-03',
+        },
+        {
+          _id: '4',
+          avatar: 'https://via.placeholder.com/40', // Sample avatar URL
+          name: 'Bob Brown',
+          email: 'bob.brown@example.com',
+          role: 'User',
+          status: 'Active',
+          createdAt: '2024-08-04',
+        },
+        {
+          _id: '5',
+          avatar: 'https://via.placeholder.com/40', // Sample avatar URL
+          name: 'Charlie Black',
+          email: 'charlie.black@example.com',
+          role: 'Admin',
+          status: 'Inactive',
+          createdAt: '2024-08-05',
+        },
+      ];
+      
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-xl font-bold mb-4">Role List</h1>
             <DataTable
                 columns={columns}
-                data={roles}
+                data={data}
                 onEdit={handleEdit}
                 onDelete={handleDeleteClick}
                 totalItems={totalItems}
