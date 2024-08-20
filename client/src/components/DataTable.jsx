@@ -81,13 +81,13 @@ const DataTable = ({
       <hr className="border-dotted border-gray-200 mb-4" />
       {/* Search */}
       <div className="flex justify-between mb-4">
-      <input
-  type="text"
-  placeholder="Search..."
-  value={searchQuery}
-  onChange={(e) => setSearchQuery(e.target.value)}
-  className="border rounded-lg px-3 w-1/4" 
-/>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border rounded-lg px-3 w-1/4"
+        />
 
         <div>
           <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-100 text-green-500 hover:bg-gray-200">
@@ -102,8 +102,8 @@ const DataTable = ({
         // Check if the data is empty
         data.length === 0 ? (
           <>
-          <hr className="border-dotted border-gray-200 mb-4" />
-          <p className="text-center">No data found</p>
+            <hr className="border-dotted border-gray-200 mb-4" />
+            <p className="text-center">No data found</p>
           </>
         ) : (
           <>
@@ -170,15 +170,15 @@ const DataTable = ({
                           ) : column.key === 'role' ? (
                             <StatusBadge role={row.role} />
                           ) : column.key === 'createdAt' ? (
-                              formatDate(row[column.key])
-                          ): (
+                            formatDate(row[column.key])
+                          ) : (
                             row[column.key]
                           )}
                         </td>
                       ))}
                       <td className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm">
                         <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
-                        <FaRegEdit />
+                          <FaRegEdit />
                         </button>
                         <button onClick={() => onDelete(row._id)} className="text-red-500">
                           <FaRegTrashCan />
@@ -192,13 +192,13 @@ const DataTable = ({
 
             {/* Pagination */}
             <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        itemsPerPage = {itemsPerPage}
-        handleItemsPerPageChange = {onItemsPerPageChange}
-        data = {data}
-      />
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              itemsPerPage={itemsPerPage}
+              handleItemsPerPageChange={onItemsPerPageChange}
+              data={data}
+            />
           </>
         )
       }

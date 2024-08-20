@@ -5,10 +5,11 @@ import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/Globa
 import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
+import Breadcrumb from '../../../components/Breadcrumb';
 
 const RoleList = () => {
     const dispatch = useDispatch();
-    const {DataTable} = components;
+    const { DataTable } = components;
     const roles = useSelector(state => state?.role?.roles?.roles) || [];
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
 
@@ -20,21 +21,21 @@ const RoleList = () => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('');
 
-// Handle the API call to get the roles list with the updated query parameters
+    // Handle the API call to get the roles list with the updated query parameters
     useDebouncedEffect(
         () => {
-          dispatch(getRoles({ 
-            search: searchQuery,
-            limit: itemsPerPage,  
-            filter,
-            currentPage,
-            sortColumn,
-            sortOrder
-          }));
+            dispatch(getRoles({
+                search: searchQuery,
+                limit: itemsPerPage,
+                filter,
+                currentPage,
+                sortColumn,
+                sortOrder
+            }));
         },
         [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder],
         1000 // Delay in milliseconds
-      );
+    );
     const handleEdit = (role) => {
         console.log('Edit:', role);
     };
@@ -47,9 +48,9 @@ const RoleList = () => {
         openModal: (modalConfig) => dispatch(openModal(modalConfig)),
         componentName: 'DeleteConfirmation',
         componentProps: {
-          // Additional props you might want to pass
+            // Additional props you might want to pass
         },
-      });
+    });
 
     const handleItemsPerPageChange = (value) => {
         setItemsPerPage(value);
@@ -69,31 +70,39 @@ const RoleList = () => {
         { key: 'name', label: 'Role' },
         { key: 'status', label: 'Status' },
         { key: 'createdAt', label: 'Created At' },
-      ];
-      
+    ];
+
     return (
         <DashboardLayout>
-        <div className="container mx-auto p-4">
-            <DataTable
-                tableTitle = "Roles Details"
-                columns={columns}
-                data={roles}
-                onEdit={handleEdit}
-                onDelete={handleDeleteClick}
-                totalItems={totalItems}
-                itemsPerPage={itemsPerPage}
-                onItemsPerPageChange={handleItemsPerPageChange}
-                setSearchQuery={setSearchQuery}
-                searchQuery={searchQuery}
-                onFilter={handleFilter}
-                currentPage={currentPage}
-                onPageChange={setCurrentPage}
-                onSort={handleSort}
-                totalPages={totalPages}
-                sortColumn = {sortColumn}
-                sortOrder = {sortOrder}
+            <Breadcrumb
+                items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Roles' }]}
             />
-        </div>
+            <div className="flex items-center float-right">
+                <button className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                    Create New
+                </button>
+            </div>
+            <div className="container mx-auto p-4">
+                <DataTable
+                    tableTitle="Roles Details"
+                    columns={columns}
+                    data={roles}
+                    onEdit={handleEdit}
+                    onDelete={handleDeleteClick}
+                    totalItems={totalItems}
+                    itemsPerPage={itemsPerPage}
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
+                    onFilter={handleFilter}
+                    currentPage={currentPage}
+                    onPageChange={setCurrentPage}
+                    onSort={handleSort}
+                    totalPages={totalPages}
+                    sortColumn={sortColumn}
+                    sortOrder={sortOrder}
+                />
+            </div>
         </DashboardLayout>
     );
 };
