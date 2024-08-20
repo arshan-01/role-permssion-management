@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1D4ED8',       // Blue color
+        primary: '#4F46E5',       // Blue color
         secondary: '#6D28D9',     // Purple color
         accent: '#FBBF24',        // Yellow color
-        background: '#F3F4F6',    // Light gray background
+        "light-gray": '#f3f4f6',    // Light gray background
         text: '#1F2937',         // Dark gray text
         success: '#10B981',       // Green color for success
         error: '#EF4444',         // Red color for error

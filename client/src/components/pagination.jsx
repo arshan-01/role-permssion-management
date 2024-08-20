@@ -86,7 +86,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-gray-100 rounded-md disabled:opacity-50"
+              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-light-gray rounded-md disabled:opacity-50"
             >
               <FaChevronLeft />
             </button>
@@ -95,7 +95,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <li key={index}>
               <button
                 onClick={() => handlePageChange(page)}
-                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100'} rounded-md`}
+                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-light-gray'} rounded-md`}
               >
                 {page === elipse ? '...' : page}
               </button>
@@ -105,7 +105,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-gray-100 rounded-md disabled:opacity-50"
+              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-light-gray-100 rounded-md disabled:opacity-50"
             >
               <FaChevronRight />
             </button>

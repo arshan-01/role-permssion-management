@@ -151,7 +151,7 @@ const DataTable = ({
                       {columns.map((column) => (
                         <td
                           key={column.key}
-                          className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm"
+                          className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm"
                         >
                           {column.key === 'avatar' ? (
                             <div className="flex items-center">
@@ -169,7 +169,7 @@ const DataTable = ({
                           )}
                         </td>
                       ))}
-                      <td className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm">
+                      <td className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm">
                         <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
                         <FaRegEdit />
                         </button>
