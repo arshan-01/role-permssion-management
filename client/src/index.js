@@ -6,9 +6,9 @@ import store, { persistor } from './redux/store'; // Adjust the path if necessar
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from './components/LoadingSpinner';
 import { Toaster } from 'sonner'; // Import the Toaster component
-import GlobalModal from './components/Modal/GlobalModal';
+import GlobalModal from './components/globalModal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../redux/features/modal/modal.slice';
+import { closeModal } from '../redux/features/modal/modal.slice';
 
 const DeleteConfirmation = ({ onDelete }) => {
   const dispatch = useDispatch();

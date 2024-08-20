@@ -179,7 +179,7 @@ const DataTable = ({
                     {row[column.key]}
                   </td>
                 ))}
-                <td className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm flex">
+                <td className="py-2 px-4 border-b border-gray-200 text-gray-700 text-sm">
                   <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
                     <FaEdit />
                   </button>

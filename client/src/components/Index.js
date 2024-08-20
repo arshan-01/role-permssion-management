@@ -1,7 +1,7 @@
 // components/Index.jsx
 
-import DataTable from "./DataTable/DataTable";
-import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
+import DataTable from "./DataTable";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 // Import all other components
 
