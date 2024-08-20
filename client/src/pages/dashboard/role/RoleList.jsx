@@ -4,6 +4,7 @@ import { deleteRole, getRoles } from '../../../redux/features/role/role.service'
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
+import DashboardLayout from '../../../layouts/DashboardLayout';
 
 const RoleList = () => {
     const dispatch = useDispatch();
@@ -71,9 +72,10 @@ const RoleList = () => {
       ];
       
     return (
+        <DashboardLayout>
         <div className="container mx-auto p-4">
-            <h1 className="text-xl font-bold mb-4">Role List</h1>
             <DataTable
+                tableTitle = "Roles Details"
                 columns={columns}
                 data={roles}
                 onEdit={handleEdit}
@@ -92,6 +94,7 @@ const RoleList = () => {
                 sortOrder = {sortOrder}
             />
         </div>
+        </DashboardLayout>
     );
 };
 

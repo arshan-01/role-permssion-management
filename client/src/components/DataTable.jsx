@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort, FaRegEdit } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
-import StatusBadge from './StatusBadge';
+import StatusBadge from './UI/StatusBadge';
 import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
 import Pagination from './Pagination';
 import { formatDate } from '../utils/formatDate';
 const DataTable = ({
+  tableTitle,
   columns,
   data,
   onEdit,
@@ -74,17 +75,20 @@ const DataTable = ({
 
   return (
     <div className="w-full">
+      {/* Table Title */}
+      <h6 className="text-md font-semibold mb-4">{tableTitle}</h6>
+      {/* Hr line */}
+      <hr className="border-dotted border-gray-200 mb-4" />
       {/* Search */}
       <div className="flex justify-between mb-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-          className="border rounded-lg p-2"
-        />
+      <input
+  type="text"
+  placeholder="Search..."
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="border rounded-lg px-3 w-1/4" 
+/>
+
         <div>
           <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-100 text-green-500 hover:bg-gray-200">
             <IoDownload className="inline" size={20} />
@@ -97,7 +101,10 @@ const DataTable = ({
       {
         // Check if the data is empty
         data.length === 0 ? (
+          <>
+          <hr className="border-dotted border-gray-200 mb-4" />
           <p className="text-center">No data found</p>
+          </>
         ) : (
           <>
             {/* Table */}
