@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaEdit, FaTrash, FaDownload, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
 
@@ -22,25 +22,42 @@ const DataTable = ({
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
-
   const [filters, setFilters] = useState(
     columns.reduce((acc, column) => ({ ...acc, [column.key]: '' }), {})
   );
+  const selectAllRef = useRef(null);
+
   const handleSortIconClick = (key) => {
     const newSortOrder = sortColumn === key && sortOrder === 'asc' ? 'desc' : 'asc';
     onSort(key, newSortOrder);
   };
 
-
   const handleRowSelect = (itemId) => {
     setSelectedRows((prev) => {
       if (prev.includes(itemId)) {
-        return prev.filter((id) => id !== itemId);
+        return prev.filter((_id) => _id !== itemId);
       } else {
         return [...prev, itemId];
       }
     });
   };
+
+  const handleSelectAll = () => {
+    if (selectedRows.length === data.length) {
+      setSelectedRows([]);
+    } else {
+      setSelectedRows(data.map((row) => row._id));
+    }
+  };
+
+  useEffect(() => {
+    if (selectAllRef.current) {
+      const allSelected = data.length > 0 && selectedRows.length === data.length;
+      const someSelected = selectedRows.length > 0 && selectedRows.length < data.length;
+      selectAllRef.current.checked = allSelected;
+      selectAllRef.current.indeterminate = someSelected;
+    }
+  }, [selectedRows, data]);
 
   const handleColumnFilterChange = (key, value) => {
     const newFilters = { ...filters, [key]: value };
@@ -110,7 +127,6 @@ const DataTable = ({
           <button onClick={downloadData} className="p-2 rounded-lg bg-gray-100 text-red-500 hover:bg-gray-200">
             <FaTrash className="inline" size={20} />
           </button>
-
         </div>
       </div>
         {
@@ -126,15 +142,10 @@ const DataTable = ({
             <tr className="bg-gray-100 text-left">
               <th className="py-2 px-4 border-b border-gray-200">
                 <input
+                  ref={selectAllRef}
                   type="checkbox"
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedRows(data.map((row) => row.id));
-                    } else {
-                      setSelectedRows([]);
-                    }
-                  }}
-                  />
+                  onChange={handleSelectAll}
+                />
               </th>
               {columns.map((column) => (
                 <th
@@ -167,8 +178,8 @@ const DataTable = ({
                 <td className="py-2 px-4 border-b border-gray-200">
                   <input
                     type="checkbox"
-                    checked={selectedRows.includes(row.id)}
-                    onChange={() => handleRowSelect(row.id)}
+                    checked={selectedRows.includes(row._id)}
+                    onChange={() => handleRowSelect(row._id)}
                     />
                 </td>
                 {columns.map((column) => (
@@ -220,13 +231,15 @@ const DataTable = ({
           </button>
           {pageNumbers.map((pageNumber, index) =>
             pageNumber === '...' ? (
-              <span key={index} className="mr-2">...</span>
+              <span key={index} className="mr-2 p-2 text-gray-500">
+                {pageNumber}
+              </span>
             ) : (
               <button
-              key={index}
-              onClick={() => onPageChange(pageNumber)}
-              className={`mr-2 p-2 rounded-lg ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
-              >
+                key={pageNumber}
+                onClick={() => onPageChange(pageNumber)}
+                className={`mr-2 p-2 rounded-lg ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+                >
                 {pageNumber}
               </button>
             )
@@ -234,17 +247,14 @@ const DataTable = ({
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="bg-gray-300 p-2 rounded-lg flex items-center"
+            className="bg-gray-300 p-2 rounded-lg flex items-center justify-center"
             >
             <FaChevronRight />
           </button>
         </div>
-
       </div>
         </>
-          )
-
-        }
+        )}
     </div>
   );
 };
