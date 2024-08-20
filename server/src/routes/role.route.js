@@ -32,6 +32,9 @@ const router = express.Router();
  *               name:
  *                 type: string
  *                 example: Admin
+ *               status:
+ *                 type: string
+ *                 example: active
  *               permissions:
  *                 type: array
  *                 items:
