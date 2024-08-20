@@ -49,22 +49,22 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
   }
 
   return (
-    <div className="dataTable-bottom flex items-center justify-between border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div className="dataTable-bottom flex items-center justify-between border-gray-200 bg-white px-2 py-3">
 <div className='flex justify-around items-center'>
-  <div className="items-per-page mr-9">
-    <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page:</label>
+  <div className="items-per-page mr-9 flex items-center">
+    <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page</label>
     <select
-      id="items-per-page"
-      value={itemsPerPage}
-      onChange={(e) => handleItemsPerPageChange(Number(e.target.value))} // Convert value to number
-      className="ml-2 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    >
-      {[10, 20, 30, 50].map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    id="items-per-page"
+    value={itemsPerPage}
+    onChange={(e) => handleItemsPerPageChange(Number(e.target.value))} // Convert value to number
+    className=" mx-3 block w-15 py-2 px-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 sm:text-sm"
+  >
+    {[10, 20, 30, 50].map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
   </div>
   <div className="dataTable-info text-sm text-gray-500">
   Showing{' '}
