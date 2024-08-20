@@ -4,6 +4,7 @@ import { IoDownload } from "react-icons/io5";
 import StatusBadge from './StatusBadge';
 import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
 import Pagination from './Pagination';
+import { formatDate } from '../utils/formatDate';
 const DataTable = ({
   columns,
   data,
@@ -161,7 +162,9 @@ const DataTable = ({
                             <StatusBadge status={row.status} />
                           ) : column.key === 'role' ? (
                             <StatusBadge role={row.role} />
-                          ) : (
+                          ) : column.key === 'createdAt' ? (
+                              formatDate(row[column.key])
+                          ): (
                             row[column.key]
                           )}
                         </td>
@@ -186,7 +189,8 @@ const DataTable = ({
         totalPages={totalPages}
         onPageChange={onPageChange}
         itemsPerPage = {itemsPerPage}
-        onItemsPerPageChange = {onItemsPerPageChange}
+        handleItemsPerPageChange = {onItemsPerPageChange}
+        data = {data}
       />
           </>
         )

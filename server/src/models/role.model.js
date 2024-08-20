@@ -11,6 +11,11 @@ const roleSchema = new mongoose.Schema(
       type: [String], // Define permissions as an array of strings
       required: true, // Ensure permissions is required
     },
+    status : {
+      type: String,
+      default: "active",
+      enum : ["active", "inactive"]
+    },
   },
   { timestamps: true },
 );

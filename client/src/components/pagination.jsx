@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa'; // Import icons from react-icons
 
-const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handleItemsPerPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handleItemsPerPageChange, data }) => {
   // Handle page change
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -50,26 +50,36 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
 
   return (
     <div className="dataTable-bottom flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-    <div className='flex justify-around items-center'>
-    <div className="items-per-page mr-9">
-          <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page:</label>
-          <select
-            id="items-per-page"
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-            className="ml-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          >
-            {[10, 20, 30, 50].map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      <div className="dataTable-info text-sm text-gray-500">
-        Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to <span className="font-medium">{Math.min(currentPage * 10, 12)}</span> of <span className="font-medium">{totalPages * 10}</span> entries
-      </div>
-    </div>
+<div className='flex justify-around items-center'>
+  <div className="items-per-page mr-9">
+    <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page:</label>
+    <select
+      id="items-per-page"
+      value={itemsPerPage}
+      onChange={(e) => handleItemsPerPageChange(Number(e.target.value))} // Convert value to number
+      className="ml-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    >
+      {[10, 20, 30, 50].map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+  <div className="dataTable-info text-sm text-gray-500">
+  Showing{' '}
+  <span className="font-medium">
+    {(currentPage - 1) * itemsPerPage + 1}
+  </span>{' '}
+  to{' '}
+  <span className="font-medium">
+    {Math.min(currentPage * itemsPerPage, data.length)}
+  </span>{' '}
+  of <span className="font-medium">{data.length}</span> entries
+</div>
+
+</div>
+
       <nav className="dataTable-pagination">
         <ul className="dataTable-pagination-list flex items-center space-x-2">
           <li>
