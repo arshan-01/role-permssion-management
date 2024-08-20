@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
-import { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
+import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 
@@ -19,35 +19,21 @@ const RoleList = () => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('');
 
-    useEffect(() => {
-        // Only perform the search if there's a search query
-        if (searchQuery !== '') {
-            const delayDebounceFn = setTimeout(() => {
-                dispatch(getRoles({ 
-                    search: searchQuery,
-                    limit: itemsPerPage,  
-                    filter,
-                    currentPage,
-                    sortColumn,
-                    sortOrder
-                }));
-            }, 1000);
-    
-            // Cleanup function to cancel the timeout if the effect is called again before the delay
-            return () => clearTimeout(delayDebounceFn);
-        } else {
-            // If searchQuery is empty, perform the search immediately
-            dispatch(getRoles({ 
-                search: searchQuery,
-                limit: itemsPerPage,  
-                filter,
-                currentPage,
-                sortColumn,
-                sortOrder
-            }));
-        }
-    }, [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder]);
-    
+// Handle the API call to get the roles list with the updated query parameters
+    useDebouncedEffect(
+        () => {
+          dispatch(getRoles({ 
+            search: searchQuery,
+            limit: itemsPerPage,  
+            filter,
+            currentPage,
+            sortColumn,
+            sortOrder
+          }));
+        },
+        [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder],
+        1000 // Delay in milliseconds
+      );
     const handleEdit = (role) => {
         console.log('Edit:', role);
     };
