@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import DashboardLayout from '../../../layouts/DashboardLayout';
+import Breadcrumb from '../../../components/Breadcrumb';
 
 const EditRole = () => {
   const [roleTitle, setRoleTitle] = useState('');
@@ -132,7 +134,11 @@ const EditRole = () => {
   };
 
   return (
-    <div className="overflow-x-auto px-16 py-10">
+    <DashboardLayout>
+            <Breadcrumb
+                items={[{ href: '/dashboard', label: 'Dashboard' }, {href: '/dashboard/roles', label: 'Roles'}, { label: 'Update' }]}
+            />
+    <div className="overflow-x-auto py-10">
       <div className="mb-4 flex items-center">
         <input
           type="text"
@@ -213,6 +219,7 @@ const EditRole = () => {
         </tbody>
       </table>
     </div>
+    </DashboardLayout>
   );
 };
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { useDispatch, useSelector } from "react-redux";
+import DashboardLayout from '../../../layouts/DashboardLayout';
+import Breadcrumb from '../../../components/Breadcrumb';
+// import { useNavigate } from 'react-router-dom';
 
-const AddRole = () => {
+const CreateRole = () => {
   const permissions = useSelector(state => state?.permission?.actionList) || [];
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [roleTitle, setRoleTitle] = useState('');
   const [checkedPermissions, setCheckedPermissions] = useState({});
@@ -32,7 +34,7 @@ const AddRole = () => {
     // Get permissions from the API
     dispatch(getActionsList())
   }, []);
-  
+
   const categoriesAndActions = extractCategoriesAndActions(permissions);
   const actions = [...new Set(Object.values(categoriesAndActions).flat())];
   const predefinedActions = ['read', 'create', 'update', 'delete']; // Define predefined actions
@@ -120,12 +122,12 @@ const AddRole = () => {
   const handleUpdate = () => {
     console.log("Redirect to edit role page");
     // navigate to edit role page
-    navigate("/role/edit");
+    // navigate("/dashboard/role/update");
   };
 
   return (
-    <div className="overflow-x-auto px-16 py-10">
-      <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div className="overflow-x-auto py-10">
+      <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4 float-right">
         <div className="flex flex-col sm:flex-row items-center gap-2">
           <input
             type="text"
@@ -148,7 +150,7 @@ const AddRole = () => {
           Update Role
         </button>
         <button
-          onClick={() => navigate("/permission/add")}
+          // onClick={() => navigate("/permission/add")}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
         >
           Add Permission
@@ -223,4 +225,4 @@ const AddRole = () => {
   );
 };
 
-export default AddRole;
+export default CreateRole;

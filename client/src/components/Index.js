@@ -1,5 +1,6 @@
 // components/Index.jsx
 
+import CreateRole from "../pages/dashboard/role/CreateRole";
 import DataTable from "./DataTable";
 import DeleteConfirmation from "./DeleteConfirmation";
 
@@ -7,7 +8,8 @@ import DeleteConfirmation from "./DeleteConfirmation";
 
 const components = {
   DataTable,
-  DeleteConfirmation
+  DeleteConfirmation,
+  CreateRole
   // Add all other components
 };
 

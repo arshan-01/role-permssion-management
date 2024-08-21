@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Breadcrumb = ({ items }) => {
     return (
@@ -14,12 +15,12 @@ const Breadcrumb = ({ items }) => {
                             {index > 0 && <li><span className="text-gray-500 mx-2">/</span></li>}
                             <li>
                                 {item.href ? (
-                                    <a
-                                        href={item.href}
+                                    <Link
+                                        to={item.href}
                                         className={`text-gray-500 ${index === items.length - 1 ? 'text-blue-600' : 'hover:text-blue-600'}`}
                                     >
                                         {item.label}
-                                    </a>
+                                    </Link>
                                 ) : (
                                     <span
                                         className={index === items.length - 1 ? 'text-blue-600' : 'text-gray-500'}

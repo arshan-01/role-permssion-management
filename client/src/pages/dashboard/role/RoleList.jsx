@@ -6,6 +6,7 @@ import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 const RoleList = () => {
     const dispatch = useDispatch();
@@ -71,15 +72,22 @@ const RoleList = () => {
         { key: 'status', label: 'Status' },
         { key: 'createdAt', label: 'Created At' },
     ];
+// Handle the create role button click
+const HaandleCreateRole = () => {
+    dispatch(openModal({ componentName: 'CreateRole', componentProps: { someProp: 'value' } }));
 
+};
     return (
         <DashboardLayout>
             <Breadcrumb
                 items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Roles' }]}
             />
             <div className="flex items-center float-right">
-                <button className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                {/* <Link to="/dashboard/role/add" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
                     Create New
+                </Link> */}
+                <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                        Create New
                 </button>
             </div>
             <div className="container mx-auto p-4">
