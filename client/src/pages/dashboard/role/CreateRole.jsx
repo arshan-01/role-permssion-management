@@ -4,6 +4,7 @@ import { getActionsList } from '../../../redux/features/permission/permission.se
 import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
+import { createRole } from '../../../redux/features/role/role.service';
 
 const CreateRole = () => {
   const permissions = useSelector(state => state?.permission?.actionList) || [];
@@ -106,9 +107,9 @@ const CreateRole = () => {
       name: roleTitle,
       permissions: Object.keys(checkedPermissions).filter(permission => checkedPermissions[permission])
     };
-
-    console.log("New Role added:", roleData);
-
+    dispatch(createRole(roleData))
+    .unwrap()
+    .then(() => {
     // Reset state after adding the role
     setRoleTitle('');
     setCheckedPermissions({});
@@ -116,6 +117,8 @@ const CreateRole = () => {
       acc[action] = false;
       return acc;
     }, {}));
+    }
+    );
   };
 
   // redirect to edit role page
