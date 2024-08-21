@@ -38,13 +38,14 @@ const RoleList = () => {
         [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder],
         1000 // Delay in milliseconds
     );
-    const handleEdit = (role) => {
-        console.log('Edit:', role);
-        dispatch(getRoleById(role?._id));
+    const handleEdit = async (role) => {
+        await dispatch(getRoleById(role?._id))
+        .unwrap()
+        .then(() => {
         // navigate to edit role page
-        setTimeout(() => {
             navigate(`/dashboard/role/update`);
-        } , 500);
+        }
+        );
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({

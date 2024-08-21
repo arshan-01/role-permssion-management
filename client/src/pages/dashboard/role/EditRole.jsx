@@ -3,13 +3,14 @@ import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActionsList } from '../../../redux/features/permission/permission.service';
+import { updateRole } from '../../../redux/features/role/role.service';
 
 const EditRole = () => {
   const dispatch = useDispatch();
   const currentRole = useSelector(state => state?.role?.currentRole) || [];
   console.log("🚀 ~ EditRole ~ currentRole:", currentRole)
   const permissions = useSelector(state => state?.permission?.actionList) || [];
-  const [roleTitle, setRoleTitle] = useState('');
+  const [roleTitle, setRoleTitle] = useState(currentRole?.name);
   const [checkedPermissions, setCheckedPermissions] = useState({});
   const [globalChecks, setGlobalChecks] = useState({});
 
@@ -107,13 +108,19 @@ const EditRole = () => {
     });
   };
 
-  const handleAddRole = () => {
+  const handleUpdateRole = () => {
+    if (!roleTitle) {
+      console.error('Role title is required');
+      return;
+    }
     const roleData = {
       name: roleTitle,
       permissions: Object.keys(checkedPermissions).filter(permission => checkedPermissions[permission])
     };
-
-    console.log("New Role added:", roleData);
+    dispatch(updateRole({
+      id : currentRole?._id,
+      roleData
+    }));
   };
   useEffect (() => {
     // Get permissions from the API
@@ -128,13 +135,13 @@ const EditRole = () => {
       <div className="mb-4 flex items-center">
         <input
           type="text"
-          value={currentRole?.name}
+          value={roleTitle}
           onChange={handleRoleTitleChange}
           placeholder="Enter role title"
           className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
         />
         <button
-          onClick={handleAddRole}
+          onClick={handleUpdateRole}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
         >
           Update Role
