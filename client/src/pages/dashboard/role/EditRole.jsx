@@ -54,7 +54,7 @@ const EditRole = () => {
 
     setCheckedPermissions(initialCheckedPermissions);
     updateGlobalChecks(initialCheckedPermissions);
-  }, []);
+  }, [currentRoleId, currentRole, categoriesAndActions]);
   const handleRoleTitleChange = (e) => {
     setRoleTitle(e.target.value);
   };
@@ -126,11 +126,14 @@ const EditRole = () => {
   useEffect(() => {
     // Get permissions from the API
     dispatch(getActionsList())
-  }, []);
+    .unwrap()
+    .then(() => {
+      dispatch(getRoleById(currentRoleId))    })
+  }, [dispatch, currentRoleId]);
   // Get role by currentRoleId
-  useEffect(() => {
-    dispatch(getRoleById(currentRoleId))
-  }, [currentRoleId]);
+  // useEffect(() => {
+  //   dispatch(getRoleById(currentRoleId))
+  // }, [currentRoleId]);
 
   return (
     <DashboardLayout>
@@ -141,7 +144,7 @@ const EditRole = () => {
         <div className="mb-4 flex items-center">
           <input
             type="text"
-            value={roleTitle}
+            value={currentRole?.name || roleTitle || ''}
             onChange={handleRoleTitleChange}
             placeholder="Enter role title"
             className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
