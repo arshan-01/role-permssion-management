@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRole, getRoleById, getRoles } from '../../../redux/features/role/role.service';
+import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { setCurrentRoleId } from '../../../redux/features/role/role.slice';
 
 const RoleList = () => {
     const dispatch = useDispatch();
@@ -39,13 +40,10 @@ const RoleList = () => {
         1000 // Delay in milliseconds
     );
     const handleEdit = async (role) => {
-        await dispatch(getRoleById(role?._id))
-        .unwrap()
-        .then(() => {
+        dispatch(setCurrentRoleId(role?._id))
+
         // navigate to edit role page
-            navigate(`/dashboard/role/update`);
-        }
-        );
+        navigate(`/dashboard/role/update`);
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({

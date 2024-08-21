@@ -1,5 +1,5 @@
 // src/redux/features/role/role.slice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import {
   getRoles,
   getRoleById,
@@ -13,10 +13,18 @@ const roleSlice = createSlice({
   initialState: {
     roles: [],
     currentRole: null,
+    currentRoleId : null,
     status: 'idle',
     error: null
   },
-  reducers: {},
+  reducers: {
+    setCurrentRoleId: (state, action) => {
+      state.currentRoleId = action.payload;
+    },
+    clearCurrentRole: (state) => {
+      state.currentRole = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       // Get Roles
@@ -82,5 +90,5 @@ const roleSlice = createSlice({
       });
   }
 });
-
+export const { setCurrentRoleId, clearCurrentRole } = roleSlice.actions;
 export default roleSlice.reducer;

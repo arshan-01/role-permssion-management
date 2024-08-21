@@ -3,11 +3,12 @@ import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActionsList } from '../../../redux/features/permission/permission.service';
-import { updateRole } from '../../../redux/features/role/role.service';
+import { getRoleById, updateRole } from '../../../redux/features/role/role.service';
 
 const EditRole = () => {
   const dispatch = useDispatch();
   const currentRole = useSelector(state => state?.role?.currentRole) || [];
+  const currentRoleId = useSelector(state => state?.role?.currentRoleId) || [];
   console.log("🚀 ~ EditRole ~ currentRole:", currentRole)
   const permissions = useSelector(state => state?.permission?.actionList) || [];
   const [roleTitle, setRoleTitle] = useState(currentRole?.name);
@@ -45,15 +46,15 @@ const EditRole = () => {
     // Initialize checkedPermissions based on currentRole?.permissions?.
     const initialCheckedPermissions = {};
     currentRole?.permissions?.forEach(permission => {
-        const [category, action] = permission.split('-');
-        if (categoriesAndActions[category]?.includes(action)) {
-            initialCheckedPermissions[`${category}-${action}`] = true;
-        }
+      const [category, action] = permission.split('-');
+      if (categoriesAndActions[category]?.includes(action)) {
+        initialCheckedPermissions[`${category}-${action}`] = true;
+      }
     });
 
     setCheckedPermissions(initialCheckedPermissions);
     updateGlobalChecks(initialCheckedPermissions);
-}, []);
+  }, []);
   const handleRoleTitleChange = (e) => {
     setRoleTitle(e.target.value);
   };
@@ -100,8 +101,8 @@ const EditRole = () => {
       actions.forEach(action => {
         updatedGlobalChecks[action] = Object.keys(categoriesAndActions).every(category =>
           categoriesAndActions[category].includes(action) ?
-          newCheckedPermissions[`${category}-${action}`] :
-          true
+            newCheckedPermissions[`${category}-${action}`] :
+            true
         );
       });
       return updatedGlobalChecks;
@@ -118,100 +119,105 @@ const EditRole = () => {
       permissions: Object.keys(checkedPermissions).filter(permission => checkedPermissions[permission])
     };
     dispatch(updateRole({
-      id : currentRole?._id,
+      id: currentRole?._id,
       roleData
     }));
   };
-  useEffect (() => {
+  useEffect(() => {
     // Get permissions from the API
     dispatch(getActionsList())
   }, []);
+  // Get role by currentRoleId
+  useEffect(() => {
+    dispatch(getRoleById(currentRoleId))
+  }, [currentRoleId]);
+
   return (
     <DashboardLayout>
-            <Breadcrumb
-                items={[{ href: '/dashboard', label: 'Dashboard' }, {href: '/dashboard/roles', label: 'Roles'}, { label: 'Update' }]}
-            />
-    <div className="overflow-x-auto py-10">
-      <div className="mb-4 flex items-center">
-        <input
-          type="text"
-          value={roleTitle}
-          onChange={handleRoleTitleChange}
-          placeholder="Enter role title"
-          className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
-        />
-        <button
-          onClick={handleUpdateRole}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-        >
-          Update Role
-        </button>
-      </div>
-      <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-            {predefinedActions.map(action => (
-              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={globalChecks[action] || false}
-                    onChange={() => handleGlobalToggle(action)}
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out mr-2"
-                  />
-                  {action}
-                </div>
-              </th>
-            ))}
-            {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={globalChecks[action] || false}
-                    onChange={() => handleGlobalToggle(action)}
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out mr-2"
-                  />
-                  {action}
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {Object.keys(categoriesAndActions).map(category => (
-            <tr key={category}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{category}</td>
+      <Breadcrumb
+        items={[{ href: '/dashboard', label: 'Dashboard' }, { href: '/dashboard/roles', label: 'Roles' }, { label: 'Update' }]}
+      />
+      <div className="overflow-x-auto py-10">
+        <div className="mb-4 flex items-center">
+          <input
+            type="text"
+            value={roleTitle}
+            onChange={handleRoleTitleChange}
+            placeholder="Enter role title"
+            className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
+          />
+          <button
+            onClick={handleUpdateRole}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+          >
+            Update Role
+          </button>
+        </div>
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
               {predefinedActions.map(action => (
-                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {categoriesAndActions[category].includes(action) && (
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={!!checkedPermissions[`${category}-${action}`]}
-                      onChange={() => handlePermissionToggle(category, action)}
-                      className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                      checked={globalChecks[action] || false}
+                      onChange={() => handleGlobalToggle(action)}
+                      className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out mr-2"
                     />
-                  )}
-                </td>
+                    {action}
+                  </div>
+                </th>
               ))}
               {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {categoriesAndActions[category].includes(action) && (
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={!!checkedPermissions[`${category}-${action}`]}
-                      onChange={() => handlePermissionToggle(category, action)}
-                      className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                      checked={globalChecks[action] || false}
+                      onChange={() => handleGlobalToggle(action)}
+                      className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out mr-2"
                     />
-                  )}
-                </td>
+                    {action}
+                  </div>
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {Object.keys(categoriesAndActions).map(category => (
+              <tr key={category}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{category}</td>
+                {predefinedActions.map(action => (
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {categoriesAndActions[category].includes(action) && (
+                      <input
+                        type="checkbox"
+                        checked={!!checkedPermissions[`${category}-${action}`]}
+                        onChange={() => handlePermissionToggle(category, action)}
+                        className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                      />
+                    )}
+                  </td>
+                ))}
+                {actions.filter(action => !predefinedActions.includes(action)).map(action => (
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {categoriesAndActions[category].includes(action) && (
+                      <input
+                        type="checkbox"
+                        checked={!!checkedPermissions[`${category}-${action}`]}
+                        onChange={() => handlePermissionToggle(category, action)}
+                        className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                      />
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </DashboardLayout>
   );
 };
