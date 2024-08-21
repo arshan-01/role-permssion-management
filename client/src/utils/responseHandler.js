@@ -1,6 +1,4 @@
 import { toast } from 'sonner';
-import { toastStyles } from './toastStyles';
-
 /**
  * Handle the response from an API request.
  * @param {Promise} request - The API request promise.
@@ -15,24 +13,17 @@ const handleResponse = async (request, options = {}) => {
 
   try {
     const response = await request;
-    console.log("🚀 ~ handleResponse ~ response:", response);
-
     // Conditionally display success toast
     if (showSuccessToast) {
-      toast.success(response.data.message, {
-        style: toastStyles.success,
-      });
+      toast.success(response.data.message);
     }
 
     return response.data;
   } catch (error) {
     // Conditionally display error toast
     if (showErrorToast) {
-      toast.error(`Error: ${error.response?.data?.message || 'Something went wrong'}`, {
-        style: toastStyles.error,
-      });
+      toast.error(`Error: ${error.response?.data?.message || 'Something went wrong'}`);
     }
-
     throw error;
   }
 };

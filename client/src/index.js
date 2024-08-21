@@ -18,7 +18,7 @@ root.render(
       <PersistGate loading={LoadingSpinner} persistor={persistor}>
         <App />
         <GlobalModal />
-        <Toaster expand={true} position="top-right" duration={4000} /> 
+        <Toaster closeButton richColors expand={true} position="top-right" duration={4000} /> 
         </PersistGate>
     </Provider>
   </React.StrictMode>
