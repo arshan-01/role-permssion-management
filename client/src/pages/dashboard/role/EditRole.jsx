@@ -54,7 +54,7 @@ const EditRole = () => {
 
     setCheckedPermissions(initialCheckedPermissions);
     updateGlobalChecks(initialCheckedPermissions);
-  }, [currentRoleId, currentRole, categoriesAndActions]);
+  }, [currentRoleId, currentRole]);
   const handleRoleTitleChange = (e) => {
     setRoleTitle(e.target.value);
   };
