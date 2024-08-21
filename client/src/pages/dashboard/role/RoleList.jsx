@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
+import { deleteRole, getRoleById, getRoles } from '../../../redux/features/role/role.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RoleList = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { DataTable } = components;
     const roles = useSelector(state => state?.role?.roles?.roles) || [];
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
@@ -39,6 +40,11 @@ const RoleList = () => {
     );
     const handleEdit = (role) => {
         console.log('Edit:', role);
+        dispatch(getRoleById(role?._id));
+        // navigate to edit role page
+        setTimeout(() => {
+            navigate(`/dashboard/role/update`);
+        } , 500);
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({
@@ -72,11 +78,11 @@ const RoleList = () => {
         { key: 'status', label: 'Status' },
         { key: 'createdAt', label: 'Created At' },
     ];
-// Handle the create role button click
-const HaandleCreateRole = () => {
-    dispatch(openModal({ componentName: 'CreateRole', componentProps: { someProp: 'value' } }));
-
-};
+    // Handle the create role button click
+    const HaandleCreateRole = () => {
+        // navigate to create role page
+        navigate("/dashboard/role/add");
+    };
     return (
         <DashboardLayout>
             <Breadcrumb
@@ -87,7 +93,7 @@ const HaandleCreateRole = () => {
                     Create New
                 </Link> */}
                 <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
-                        Create New
+                    Create New
                 </button>
             </div>
             <div className="container mx-auto p-4">

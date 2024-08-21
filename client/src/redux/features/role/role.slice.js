@@ -37,7 +37,7 @@ const roleSlice = createSlice({
       })
       .addCase(getRoleById.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.currentRole = action.payload;
+        state.currentRole = action.payload.data;
       })
       .addCase(getRoleById.rejected, (state, action) => {
         state.status = 'failed';

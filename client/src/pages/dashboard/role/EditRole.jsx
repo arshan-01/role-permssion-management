@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
+import { useDispatch, useSelector } from 'react-redux';
+import { getActionsList } from '../../../redux/features/permission/permission.service';
 
 const EditRole = () => {
+  const dispatch = useDispatch();
+  const currentRole = useSelector(state => state?.role?.currentRole) || [];
+  console.log("🚀 ~ EditRole ~ currentRole:", currentRole)
+  const permissions = useSelector(state => state?.permission?.actionList) || [];
   const [roleTitle, setRoleTitle] = useState('');
   const [checkedPermissions, setCheckedPermissions] = useState({});
   const [globalChecks, setGlobalChecks] = useState({});
@@ -23,29 +29,6 @@ const EditRole = () => {
 
     return categories;
   };
-
-  const permissions = [
-    'dashboard-read',
-    'user-create',
-    'product-read',
-    'product-create',
-    'product-update',
-    'role-create',
-    'role-update',
-    'role-delete',
-  ];
-
- // User permissions
- const userPermissions = [
-    'dashboard-read',
-    'user-create',
-    'user-update',
-    'user-delete',
-    'product-read',
-    'role-create',
-    'role-delete',
-];
-
   const categoriesAndActions = extractCategoriesAndActions(permissions);
   const actions = [...new Set(Object.values(categoriesAndActions).flat())];
   const predefinedActions = ['read', 'create', 'update', 'delete']; // Define predefined actions
@@ -58,9 +41,9 @@ const EditRole = () => {
     }, {}));
   }, []);
   useEffect(() => {
-    // Initialize checkedPermissions based on userPermissions
+    // Initialize checkedPermissions based on currentRole?.permissions?.
     const initialCheckedPermissions = {};
-    userPermissions.forEach(permission => {
+    currentRole?.permissions?.forEach(permission => {
         const [category, action] = permission.split('-');
         if (categoriesAndActions[category]?.includes(action)) {
             initialCheckedPermissions[`${category}-${action}`] = true;
@@ -132,7 +115,10 @@ const EditRole = () => {
 
     console.log("New Role added:", roleData);
   };
-
+  useEffect (() => {
+    // Get permissions from the API
+    dispatch(getActionsList())
+  }, []);
   return (
     <DashboardLayout>
             <Breadcrumb
@@ -142,7 +128,7 @@ const EditRole = () => {
       <div className="mb-4 flex items-center">
         <input
           type="text"
-          value={roleTitle}
+          value={currentRole?.name}
           onChange={handleRoleTitleChange}
           placeholder="Enter role title"
           className="border rounded-md p-2 mr-2 w-full sm:w-1/3"

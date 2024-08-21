@@ -11,7 +11,7 @@ function AppRouter() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/dashboard/role/add" element={<CreateRole />} /> */}
+        <Route path="/dashboard/role/add" element={<CreateRole />} />
         <Route path="/dashboard/role/update" element={<EditRole />} />
         <Route path="/dashboard/roles" element={<RoleList />} />
         <Route path="/dashboard/permission/add" element={<AddPermissions />} />

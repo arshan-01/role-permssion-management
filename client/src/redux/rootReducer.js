@@ -12,7 +12,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['permission'], // Only persist templateCard
+  whitelist: ['permission', 'role'], // Only persist templateCard
 };
 
 // Combine reducers

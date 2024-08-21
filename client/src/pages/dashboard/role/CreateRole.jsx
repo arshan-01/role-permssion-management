@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/Breadcrumb';
-// import { useNavigate } from 'react-router-dom';
 
 const CreateRole = () => {
   const permissions = useSelector(state => state?.permission?.actionList) || [];
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [roleTitle, setRoleTitle] = useState('');
   const [checkedPermissions, setCheckedPermissions] = useState({});
@@ -122,12 +122,17 @@ const CreateRole = () => {
   const handleUpdate = () => {
     console.log("Redirect to edit role page");
     // navigate to edit role page
-    // navigate("/dashboard/role/update");
+    navigate("/dashboard/role/update");
   };
 
   return (
+    <DashboardLayout>
+            <Breadcrumb
+                items={[{ href: '/dashboard', label: 'Dashboard' }, {href: '/dashboard/roles', label: 'Roles'}, { label: 'Add' }]}
+            />
+
     <div className="overflow-x-auto py-10">
-      <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4 float-right">
+      <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col sm:flex-row items-center gap-2">
           <input
             type="text"
@@ -143,18 +148,6 @@ const CreateRole = () => {
             Add Role
           </button>
         </div>
-        <button
-          onClick={handleUpdate}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-        >
-          Update Role
-        </button>
-        <button
-          // onClick={() => navigate("/permission/add")}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-        >
-          Add Permission
-        </button>
       </div>
 
       <table className="min-w-full divide-y divide-gray-200">
@@ -222,6 +215,7 @@ const CreateRole = () => {
         </tbody>
       </table>
     </div>
+    </DashboardLayout>
   );
 };
 
