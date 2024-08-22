@@ -7,7 +7,8 @@
 
 # testing
 /coverage
-
+#DS_Store files
+.DS_Store
 # production
 /build
 
