@@ -40,8 +40,50 @@ import {
   Square2StackIcon,
   TicketIcon,
 } from '@heroicons/react/20/solid'
+import React, { useState } from 'react';
+import { FaUser, FaPlus, FaTrash, FaThLarge, FaCogs, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
+const sidebarItems = [
+  {
+    label: "Dashboard",
+    icon: FaThLarge,
+    link: "/",
+    permissions: [],
+  },
+  {
+    label: "Roles",
+    icon: FaCogs,
+    link: "#", 
+    permissions: [],
+    subItems: [
+      {
+        label: "Roles",
+        icon: FaUser,
+        link: "/dashboard/roles",
+        permissions: ["role-view"],
+      },
+      {
+        label: "Create Role",
+        icon: FaPlus,
+        link: "/dashboard/role/create",
+        permissions: ["role-create"],
+      },
+      {
+        label: "Trash",
+        icon: FaTrash,
+        link: "dashboard/roles/trash",
+        permissions: ["role-delete"],
+      },
+    ],
+  },
+];
 function SidebarComponent() {
+  const userPermissions = ["role-create", "role-view"]; // Example permissions for the current user
+  const [isRolesMenuOpen, setIsRolesMenuOpen] = useState(false);
+
+  const toggleRolesMenu = () => {
+    setIsRolesMenuOpen(!isRolesMenuOpen);
+  };
   return (
     <Sidebar>
       <SidebarHeader>
@@ -85,6 +127,54 @@ function SidebarComponent() {
       </SidebarHeader>
       <SidebarBody>
         <SidebarSection>
+        {sidebarItems.map((item, index) => {
+            const hasPermission = item.permissions.every(permission =>
+              userPermissions.includes(permission)
+            );
+
+            if (hasPermission) {
+              return (
+                <div key={index}>
+                  {item.subItems ? (
+                    <div>
+                      <SidebarItem onClick={toggleRolesMenu} className="cursor-pointer">
+                        <item.icon />
+                        <SidebarLabel>{item.label}</SidebarLabel>
+                        {isRolesMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
+                      </SidebarItem>
+                      {isRolesMenuOpen && (
+                        <div className="ml-4">
+                          {item.subItems.map((subItem, subIndex) => {
+                            const hasSubPermission = subItem.permissions.every(permission =>
+                              userPermissions.includes(permission)
+                            );
+
+                            if (hasSubPermission) {
+                              return (
+                                <SidebarItem key={subIndex} href={subItem.link}>
+                                  <subItem.icon />
+                                  <SidebarLabel>{subItem.label}</SidebarLabel>
+                                </SidebarItem>
+                              );
+                            }
+
+                            return null;
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <SidebarItem href={item.link}>
+                      <item.icon />
+                      <SidebarLabel>{item.label}</SidebarLabel>
+                    </SidebarItem>
+                  )}
+                </div>
+              );
+            }
+
+            return null;
+          })}
           <SidebarItem href="/">
             <HomeIcon />
             <SidebarLabel>Home</SidebarLabel>

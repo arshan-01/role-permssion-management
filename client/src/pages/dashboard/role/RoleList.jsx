@@ -80,7 +80,7 @@ const RoleList = () => {
     // Handle the create role button click
     const HaandleCreateRole = () => {
         // navigate to create role page
-        navigate("/dashboard/role/add");
+        navigate("/dashboard/role/create");
     };
     return (
         <DashboardLayout>
@@ -88,7 +88,7 @@ const RoleList = () => {
                 items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Roles' }]}
             />
             <div className="flex items-center float-right">
-                {/* <Link to="/dashboard/role/add" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                {/* <Link to="/dashboard/role/create" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
                     Create New
                 </Link> */}
                 <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
