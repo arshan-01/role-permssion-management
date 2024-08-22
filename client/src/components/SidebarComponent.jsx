@@ -20,7 +20,7 @@ import {
   SidebarSpacer,
 } from './UI/sidebar'
 import {
-    ArrowRightStartOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Cog8ToothIcon,
@@ -53,7 +53,7 @@ const sidebarItems = [
   {
     label: "Roles",
     icon: FaCogs,
-    link: "#", 
+    link: "#",
     permissions: [],
     subItems: [
       {
@@ -78,7 +78,7 @@ const sidebarItems = [
   },
 ];
 function SidebarComponent() {
-  const userPermissions = ["role-create", "role-view"]; // Example permissions for the current user
+  const userPermissions = ["role-create", "role-view", "role-delete"]; // Example permissions for the current user
   const [isRolesMenuOpen, setIsRolesMenuOpen] = useState(false);
 
   const toggleRolesMenu = () => {
@@ -127,7 +127,7 @@ function SidebarComponent() {
       </SidebarHeader>
       <SidebarBody>
         <SidebarSection>
-        {sidebarItems.map((item, index) => {
+          {sidebarItems.map((item, index) => {
             const hasPermission = item.permissions.every(permission =>
               userPermissions.includes(permission)
             );
@@ -137,11 +137,16 @@ function SidebarComponent() {
                 <div key={index}>
                   {item.subItems ? (
                     <div>
-                      <SidebarItem onClick={toggleRolesMenu} className="cursor-pointer">
-                        <item.icon />
-                        <SidebarLabel>{item.label}</SidebarLabel>
-                        {isRolesMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
+                      <SidebarItem onClick={toggleRolesMenu} className="flex items-center cursor-pointer">
+                        <div className="flex-grow flex items-center">
+                          <item.icon />
+                          <SidebarLabel className="text-sm ml-4">{item.label}</SidebarLabel> {/* Apply text size */}
+                        </div>
+                        <div className="ml-2">
+                          {isRolesMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
+                        </div>
                       </SidebarItem>
+
                       {isRolesMenuOpen && (
                         <div className="ml-4">
                           {item.subItems.map((subItem, subIndex) => {
