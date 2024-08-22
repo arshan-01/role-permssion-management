@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort, FaRegEdit } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
-import StatusBadge from './UI/StatusBadge';
+import StatusBadge from './StatusBadge';
 import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
 import Pagination from './Pagination';
 import { formatDate } from '../utils/formatDate';

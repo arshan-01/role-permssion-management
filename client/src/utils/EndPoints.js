@@ -1,7 +1,7 @@
 
 // src/utils/EndPoints.js
 const config = {
-    BASE_URL: process.env.REACT_APP_BASE_URL,
+    BASE_URL: import.meta.env.VITE_BASE_URL,
     endPoints: {
         // Authentication endpoints
         login: '/auth/login',
