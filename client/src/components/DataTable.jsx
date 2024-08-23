@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaEdit, FaTrash, FaChevronLeft, FaChevronRight, FaSortAmountUp, FaSortAmountDown, FaSort, FaRegEdit } from 'react-icons/fa';
+import {FaTrash, FaSort, FaRegEdit, FaUndo } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
-import StatusBadge from './StatusBadge';
 import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
+import StatusBadge from './StatusBadge';
 import Pagination from './Pagination';
 import { formatDate } from '../utils/formatDate';
 const DataTable = ({
   tableTitle,
+  deleted,
   columns,
   data,
   onEdit,
@@ -176,10 +177,19 @@ const DataTable = ({
                           )}
                         </td>
                       ))}
-                      <td className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm">
-                        <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
-                          <FaRegEdit />
-                        </button>
+                      <td className="flex items-center space-x-2 py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm">
+                        {
+                          // Check if the data is deleted
+                          deleted ? (
+                            <button className="text-black">
+                              <FaUndo />
+                            </button>
+                          ) : (
+                            <button onClick={() => onEdit(row)} className="mr-2 text-blue-500">
+                            <FaRegEdit />
+                          </button>
+                          )
+                        }
                         <button onClick={() => onDelete(row._id)} className="text-red-500">
                           <FaRegTrashCan />
                         </button>

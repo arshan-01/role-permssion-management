@@ -9,11 +9,12 @@ import Breadcrumb from '../../../components/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentRoleId } from '../../../redux/features/role/role.slice';
 
-const RoleList = () => {
+const RoleTrash = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { DataTable } = components;
-    const roles = useSelector(state => state?.role?.roles?.roles) || [];
+    const deletedRoles = useSelector(state => state?.role?.roles?.roles) || [];
+    // const deletedRoles = roles.filter(role => role?.isDeleted === true);
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -34,7 +35,7 @@ const RoleList = () => {
                 currentPage,
                 sortColumn,
                 sortOrder,
-                isDeleted: false
+                isDeleted: true
             }));
         },
         [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder],
@@ -86,7 +87,7 @@ const RoleList = () => {
     return (
         <DashboardLayout>
             <Breadcrumb
-                items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Roles' }]}
+                items={[{ href: '/dashboard', label: 'Dashboard' }, {href : '/roles', label: 'Roles' }, {label: 'Trash' }]}
             />
             <div className="flex items-center float-right">
                 {/* <Link to="/dashboard/role/create" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
@@ -99,8 +100,9 @@ const RoleList = () => {
             <div className="container mx-auto p-4">
                 <DataTable
                     tableTitle="Roles Details"
+                    deleted = {true}
                     columns={columns}
-                    data={roles}
+                    data={deletedRoles}
                     onEdit={handleEdit}
                     onDelete={handleDeleteClick}
                     totalItems={totalItems}
@@ -121,4 +123,4 @@ const RoleList = () => {
     );
 };
 
-export default RoleList;
+export default RoleTrash;

@@ -110,16 +110,16 @@ const EditRole = () => {
   };
 
   const handleUpdateRole = () => {
-    if (!roleTitle) {
-      console.error('Role title is required');
-      return;
-    }
+    // if (!roleTitle) {
+    //   console.error('Role title is required');
+    //   return;
+    // }
     const roleData = {
       name: roleTitle,
       permissions: Object.keys(checkedPermissions).filter(permission => checkedPermissions[permission])
     };
     dispatch(updateRole({
-      id: currentRole?._id,
+      id: currentRoleId,
       roleData
     }));
   };
@@ -144,7 +144,7 @@ const EditRole = () => {
         <div className="mb-4 flex items-center">
           <input
             type="text"
-            value={currentRole?.name || roleTitle || ''}
+            value={roleTitle || currentRole?.name}
             onChange={handleRoleTitleChange}
             placeholder="Enter role title"
             className="border rounded-md p-2 mr-2 w-full sm:w-1/3"

@@ -14,7 +14,16 @@ const permissionSchema = new Schema({
       type: String,
       trim: true
     }
-  ]
+  ],
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
+  status: {
+    type: String,
+    default: 'active',
+    enum: ['active', 'inactive']
+  }
 }, { timestamps: true });
 
 // Create the Permission model
