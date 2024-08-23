@@ -78,7 +78,7 @@ export const GetRoleById = asyncHandler(async (req, res, next) => {
 // Update role by ID
 export const UpdateRole = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { name, permissions } = req.body;
+  const { status, name, permissions } = req.body;
   try {
     // Check if role already exists but exclude the current role
     const roleExist = await Role.findOne({ name, _id: { $ne: id } });
@@ -88,7 +88,7 @@ export const UpdateRole = asyncHandler(async (req, res, next) => {
     // Update role
     const role = await Role.findByIdAndUpdate(
       id,
-      { name, permissions },
+      { name, permissions, status },
       { new: true },
     );
     if (!role) return next(new ApiError(404, "Role not found"));

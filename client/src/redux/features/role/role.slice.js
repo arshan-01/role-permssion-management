@@ -23,6 +23,10 @@ const roleSlice = createSlice({
     },
     clearCurrentRole: (state) => {
       state.currentRole = null;
+    },
+    updateRoleOnLocal : (state, action) => {
+      const {role } = action.payload;
+      state.currentRole  = { ...state.currentRole, ...role };
     }
   },
   extraReducers: (builder) => {
@@ -91,5 +95,5 @@ const roleSlice = createSlice({
       });
   }
 });
-export const { setCurrentRoleId, clearCurrentRole } = roleSlice.actions;
+export const { setCurrentRoleId, clearCurrentRole, updateRoleOnLocal } = roleSlice.actions;
 export default roleSlice.reducer;

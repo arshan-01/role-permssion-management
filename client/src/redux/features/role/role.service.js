@@ -17,8 +17,8 @@ export const createRole = createAsyncThunk('roles/createRole', async (roleData) 
   return handleResponse(api.post(config.endPoints.createRole, roleData));
 });
 
-export const updateRole = createAsyncThunk('roles/updateRole', async ({ id, roleData }) => {
-  return handleResponse(api.patch(`${config.endPoints.updateRole}/${id}`, roleData));
+export const updateRole = createAsyncThunk('roles/updateRole', async ({ id, role }) => {
+  return handleResponse(api.patch(`${config.endPoints.updateRole}/${id}`, role));
 });
 
 export const deleteRole = createAsyncThunk('roles/deleteRole', async (id) => {

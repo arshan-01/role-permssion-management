@@ -4,14 +4,13 @@ import Breadcrumb from '../../../components/Breadcrumb';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { getRoleById, updateRole } from '../../../redux/features/role/role.service';
+import { updateRoleOnLocal } from '../../../redux/features/role/role.slice';
 
 const EditRole = () => {
   const dispatch = useDispatch();
   const currentRole = useSelector(state => state?.role?.currentRole) || [];
   const currentRoleId = useSelector(state => state?.role?.currentRoleId) || [];
-  console.log("🚀 ~ EditRole ~ currentRole:", currentRole)
   const permissions = useSelector(state => state?.permission?.actionList) || [];
-  const [roleTitle, setRoleTitle] = useState(currentRole?.name);
   const [checkedPermissions, setCheckedPermissions] = useState({});
   const [globalChecks, setGlobalChecks] = useState({});
 
@@ -56,7 +55,7 @@ const EditRole = () => {
     updateGlobalChecks(initialCheckedPermissions);
   }, [currentRoleId, currentRole]);
   const handleRoleTitleChange = (e) => {
-    setRoleTitle(e.target.value);
+    dispatch(updateRoleOnLocal({ id: currentRoleId, role: { name: e.target.value } }));
   };
 
   const handlePermissionToggle = (category, action) => {
@@ -114,13 +113,14 @@ const EditRole = () => {
     //   console.error('Role title is required');
     //   return;
     // }
-    const roleData = {
-      name: roleTitle,
+    const role = {
+      name: currentRole?.name,
+      status: currentRole?.status,
       permissions: Object.keys(checkedPermissions).filter(permission => checkedPermissions[permission])
     };
     dispatch(updateRole({
       id: currentRoleId,
-      roleData
+      role,
     }));
   };
   useEffect(() => {
@@ -135,27 +135,46 @@ const EditRole = () => {
   //   dispatch(getRoleById(currentRoleId))
   // }, [currentRoleId]);
 
+  // Update role status
+  const toggleActiveState = () => {
+    dispatch(updateRoleOnLocal({ id: currentRoleId, role: { status: currentRole?.status === "active" ? "inactive" : "active" } }));
+  };
   return (
     <DashboardLayout>
       <Breadcrumb
         items={[{ href: '/dashboard', label: 'Dashboard' }, { href: '/dashboard/roles', label: 'Roles' }, { label: 'Update' }]}
       />
       <div className="overflow-x-auto py-10">
-        <div className="mb-4 flex items-center">
-          <input
-            type="text"
-            value={roleTitle || currentRole?.name}
-            onChange={handleRoleTitleChange}
-            placeholder="Enter role title"
-            className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
+      <div className="mb-4 flex items-center">
+      <input
+        type="text"
+        value={currentRole?.name}
+        onChange={handleRoleTitleChange}
+        placeholder="Enter role title"
+        className="border rounded-md p-2 mr-2 w-full sm:w-1/3"
+      />
+      <button
+        onClick={handleUpdateRole}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 mr-2"
+      >
+        Update Role
+      </button>
+      <div className="flex items-center space-x-2 mx-9">
+        <span className="text-gray-700">{currentRole?.status == "active" ? "Active" : "Inactive"}</span>
+        <button
+          onClick={toggleActiveState}
+          className={`relative inline-flex items-center h-6 rounded-full w-12 ${
+            currentRole?.status == "active" ? "bg-green-500" : "bg-gray-300"
+          } transition-colors duration-200 ease-in-out`}
+        >
+          <span
+            className={`absolute inline-block w-6 h-6 bg-white rounded-full shadow transform transition-transform ${
+              currentRole?.status == "inactive" ? "translate-x-6" : "translate-x-0"
+            }`}
           />
-          <button
-            onClick={handleUpdateRole}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-          >
-            Update Role
-          </button>
-        </div>
+        </button>
+      </div>
+    </div>
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
