@@ -6,7 +6,7 @@ import { createPermission, getPermissions } from '../../../redux/features/permis
 
 // Options for the select dropdown
 const actionOptions = [
-  { value: 'Read', label: 'Read' },
+  { value: 'read', label: 'Read' },
   { value: 'create', label: 'Create' },
   { value: 'update', label: 'Update' },
   { value: 'delete', label: 'Delete' },
@@ -35,9 +35,6 @@ const CreatePermission = () => {
     const formattedPermissions = selectedActions.map(action =>
       `${moduleTitle.toLowerCase()}-${action.value}`
     );
-
-
-    console.log('Formatted Permissions:', { moduleTitle, formattedPermissions });
     dispatch(createPermission({ module: moduleTitle, actions: formattedPermissions }))
     .unwrap()
     .then(() => {
