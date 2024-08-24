@@ -17,6 +17,10 @@ const roleSchema = new Schema(
       default: "active",
       enum : ["active", "inactive"]
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

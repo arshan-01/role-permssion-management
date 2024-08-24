@@ -3,7 +3,7 @@ import Role from "../models/role.model.js";
 import { ApiError, ApiResponse, asyncHandler } from "../utils/apiUtils.js";
 
 // Create a new role
-export const createRole = asyncHandler(async (req, res, next) => {
+export const CreateRole = asyncHandler(async (req, res, next) => {
   const { name, permissions } = req.body;
   try {
     // Check if role already exists
@@ -23,9 +23,9 @@ export const createRole = asyncHandler(async (req, res, next) => {
 
 // Get all roles
 // Get all roles
-export const getAllRoles = asyncHandler(async (req, res, next) => {
+export const GetAllRoles = asyncHandler(async (req, res, next) => {
   try {
-    const { currentPage = 1, limit = 10, search, filter, sortColumn, sortOrder } = req.query;
+    const { isDeleted = false, currentPage = 1, limit = 10, search, filter, sortColumn, sortOrder } = req.query;
     // Build the query object
     const query = {}; 
     if (search) {
@@ -34,7 +34,7 @@ export const getAllRoles = asyncHandler(async (req, res, next) => {
     if (filter) {
       query.permissions = { $in: filter.split(",") };
     }
-
+      query.isDeleted = isDeleted;
     // Build the sort object
     const sort = {};
     if (sortColumn && sortOrder) {
@@ -62,7 +62,7 @@ export const getAllRoles = asyncHandler(async (req, res, next) => {
 
 
 // Get role by ID
-export const getRoleById = asyncHandler(async (req, res, next) => {
+export const GetRoleById = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
     const role = await Role.findById(id);
@@ -76,9 +76,9 @@ export const getRoleById = asyncHandler(async (req, res, next) => {
 });
 
 // Update role by ID
-export const updateRole = asyncHandler(async (req, res, next) => {
+export const UpdateRole = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { name, permissions } = req.body;
+  const { status, name, permissions } = req.body;
   try {
     // Check if role already exists but exclude the current role
     const roleExist = await Role.findOne({ name, _id: { $ne: id } });
@@ -88,7 +88,7 @@ export const updateRole = asyncHandler(async (req, res, next) => {
     // Update role
     const role = await Role.findByIdAndUpdate(
       id,
-      { name, permissions },
+      { name, permissions, status },
       { new: true },
     );
     if (!role) return next(new ApiError(404, "Role not found"));
@@ -101,14 +101,45 @@ export const updateRole = asyncHandler(async (req, res, next) => {
 });
 
 // Delete role by ID
-export const deleteRole = asyncHandler(async (req, res, next) => {
+export const SoftDeleteRole = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
-    const role = await Role.findByIdAndDelete(id);
+    // soft delete role and status to inactive
+    const role = await Role.findByIdAndUpdate(id, { status: "inactive", isDeleted: true }, { new: true });
     if (!role) return next(new ApiError(404, "Role not found"));
     res
       .status(200)
       .json(new ApiResponse(200, null, "Role deleted successfully"));
+  } catch (error) {
+    next(new ApiError(500, "Internal server error", [error.message]));
+  }
+});
+
+// Restore role by ID
+export const RestoreRole = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    // Restore role and status to active
+    const role = await Role.findByIdAndUpdate(id, { status: "active", isDeleted: false }, { new: true });
+    if (!role) return next(new ApiError(404, "Role not found"));
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Role restored successfully"));
+  } catch (error) {
+    next(new ApiError(500, "Internal server error", [error.message]));
+  }
+});
+
+// Parmanently delete role by ID
+export const PermanentDeleteRoleController = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    // Parmanently delete role
+    const role = await Role.findByIdAndDelete(id);
+    if (!role) return next(new ApiError(404, "Role not found"));
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Role deleted permanently"));
   } catch (error) {
     next(new ApiError(500, "Internal server error", [error.message]));
   }

@@ -3,7 +3,7 @@ import Permission from "../models/permission.model.js";
 import { ApiError, ApiResponse, asyncHandler } from "../utils/apiUtils.js";
 
 // Create a new permission
-export const createPermission = asyncHandler(async (req, res, next) => {
+export const CreatePermission = asyncHandler(async (req, res, next) => {
   const { module, actions } = req.body;
   try {
     const permissionExist = await Permission.findOne({ module });
@@ -23,9 +23,33 @@ export const createPermission = asyncHandler(async (req, res, next) => {
 });
 
 // Get all permissions
-export const getAllPermissions = asyncHandler(async (req, res, next) => {
+export const GetAllPermissions = asyncHandler(async (req, res, next) => {
   try {
-    const permissions = await Permission.find();
+    const { isDeleted = false, currentPage = 1, limit = 10, search, filter, sortColumn, sortOrder } = req.query;
+    // Build the query object
+    const query = {}; 
+    if (search) {
+      query.name = { $regex: search, $options: "i" };
+    }
+    if (filter) {
+      query.permissions = { $in: filter.split(",") };
+    }
+      query.isDeleted = isDeleted;
+    // Build the sort object
+    const sort = {};
+    if (sortColumn && sortOrder) {
+      sort[sortColumn] = sortOrder === "asc" ? 1 : -1;
+    }
+       // Fetch permission with pagination and sorting
+       const permissions = await Permission.find(query)
+       .sort(sort)  // Apply sorting here
+       .limit(limit * 1)
+       .skip((currentPage - 1) * limit);
+ 
+     const total = await Permission.countDocuments(query);
+ 
+     // Calculate the total number of pages
+     const pages = Math.ceil(total / limit);
     res
       .status(200)
       .json(
@@ -37,7 +61,7 @@ export const getAllPermissions = asyncHandler(async (req, res, next) => {
 });
 
 // Get action list of all permissions
-export const getPermissionsList = asyncHandler(async (req, res, next) => {
+export const GetPermissionsActionsList = asyncHandler(async (req, res, next) => {
   try {
     const permissions = await Permission.find({}, 'actions'); // Retrieve only the 'actions' field
     const actionSet = new Set();
@@ -57,7 +81,7 @@ export const getPermissionsList = asyncHandler(async (req, res, next) => {
   }
 });
 // Get permission by ID
-export const getPermissionById = asyncHandler(async (req, res, next) => {
+export const GetPermissionById = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
     const permission = await Permission.findById(id);
@@ -73,7 +97,7 @@ export const getPermissionById = asyncHandler(async (req, res, next) => {
 });
 
 // Update permission by ID
-export const updatePermission = asyncHandler(async (req, res, next) => {
+export const UpdatePermission = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const { module, actions } = req.body;
   try {
@@ -94,14 +118,51 @@ export const updatePermission = asyncHandler(async (req, res, next) => {
 });
 
 // Delete permission by ID
-export const deletePermission = asyncHandler(async (req, res, next) => {
+export const SoftDeletePermission = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const permission = await Permission.findByIdAndUpdate
+    (
+      id,
+      { status: "inactive", isDeleted: true },
+      { new: true },
+    )
+    if (!permission) return next(new ApiError(404, "Permission not found"));
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Permission deleted successfully"));
+  } catch (error) {
+    next(new ApiError(500, "Internal server error", [error.message]));
+  }
+});
+
+// RestorePermission,
+export const RestorePermission = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const permission = await Permission.findByIdAndUpdate
+    (
+      id,
+      { status: "active", isDeleted: false },
+      { new: true },
+    )
+    if (!permission) return next(new ApiError(404, "Permission not found"));
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Permission restored successfully"));
+  } catch (error) {
+    next(new ApiError(500, "Internal server error", [error.message]));
+  }});
+
+// PermanentDeletePermission,
+export const PermanentDeletePermission = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   try {
     const permission = await Permission.findByIdAndDelete(id);
     if (!permission) return next(new ApiError(404, "Permission not found"));
     res
       .status(200)
-      .json(new ApiResponse(200, null, "Permission deleted successfully"));
+      .json(new ApiResponse(200, null, "Permission deleted permanently"));
   } catch (error) {
     next(new ApiError(500, "Internal server error", [error.message]));
   }

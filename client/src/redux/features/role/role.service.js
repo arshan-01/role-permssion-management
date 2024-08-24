@@ -5,8 +5,8 @@ import api from '../../../utils/Api';
 import { config } from '../../../utils/EndPoints';
 
 // Thunks for role operations
-export const getRoles = createAsyncThunk('roles/getRoles', async ({search, filter, currentPage, limit, sortColumn, sortOrder  }) => {
-  return handleResponse(api.get(config.endPoints.getRoles, { params: { search, filter, currentPage, limit, sortColumn, sortOrder} }));
+export const getRoles = createAsyncThunk('roles/getRoles', async ({search, filter, currentPage, limit, sortColumn, sortOrder, isDeleted  }) => {
+  return handleResponse(api.get(config.endPoints.getRoles, { params: { search, filter, currentPage, limit, sortColumn, sortOrder, isDeleted} }));
 });
 
 export const getRoleById = createAsyncThunk('roles/getRoleById', async (id) => {
@@ -17,8 +17,8 @@ export const createRole = createAsyncThunk('roles/createRole', async (roleData) 
   return handleResponse(api.post(config.endPoints.createRole, roleData));
 });
 
-export const updateRole = createAsyncThunk('roles/updateRole', async ({ id, roleData }) => {
-  return handleResponse(api.patch(`${config.endPoints.updateRole}/${id}`, roleData));
+export const updateRole = createAsyncThunk('roles/updateRole', async ({ id, role }) => {
+  return handleResponse(api.patch(`${config.endPoints.updateRole}/${id}`, role));
 });
 
 export const deleteRole = createAsyncThunk('roles/deleteRole', async (id) => {
