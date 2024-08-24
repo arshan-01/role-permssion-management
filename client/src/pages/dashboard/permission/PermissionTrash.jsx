@@ -112,7 +112,8 @@ const PermissionTrash = () => {
             </div>
             <div className="container mx-auto p-4">
                 <DataTable
-                    tableTitle="Permissions Details"
+                    tableTitle="Deleted Permissions Details"
+                    deleted = {true}
                     columns={columns}
                     data={permissions}
                     onEdit={handleEdit}

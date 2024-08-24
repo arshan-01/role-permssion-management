@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { components } from 'react-select';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPermissions, updatePermission } from '../../../redux/features/permission/permission.service';
+import { updatePermissionOnLocal } from '../../../redux/features/permission/permission.slice';
 
 // Options for the select dropdown
 const actionOptions = [
@@ -12,17 +14,18 @@ const actionOptions = [
 ];
 
 const EditPermission = () => {
-    const currentPermission = useSelector(state => state?.permission?.currentPermission) || [];
+    const dispatch = useDispatch();
+    const currentPermission = useSelector(state => state?.permission?.currentPermission) || {};
     const [moduleTitle, setModuleTitle] = useState('');
     const [selectedActions, setSelectedActions] = useState([]);
 
     // Sample selected permissions
-    const selectedPermissions = currentPermission?.actions || [];
+    const selectedPermissions = currentPermission.actions || [];
 
     // Function to convert permissions to options
     const convertPermissionsToOptions = (permissions) => {
         return permissions.map(permission => {
-            const [module, action] = permission.split('-');
+            const [, action] = permission.split('-');
             return { value: action, label: action };
         });
     };
@@ -38,10 +41,11 @@ const EditPermission = () => {
             const options = convertPermissionsToOptions(selectedPermissions);
             setSelectedActions(options);
         }
-    }, []);
+    }, [selectedPermissions]);
 
     const handleModuleTitleChange = (e) => {
         setModuleTitle(e.target.value);
+        dispatch(updatePermissionOnLocal({ id: currentPermission._id, module: e.target.value }));
     };
 
     const handleActionChange = (selectedOptions) => {
@@ -49,24 +53,38 @@ const EditPermission = () => {
     };
 
     const handleAddPermission = () => {
-        // if (!moduleTitle || selectedActions.length === 0) {
-        //     console.error('Module title and actions are required');
-        //     return;
-        // }
+        if (!moduleTitle || selectedActions.length === 0) {
+            console.error('Module title and actions are required');
+            return;
+        }
 
         // Create formatted permissions list
         const formattedPermissions = selectedActions.map(action =>
-            `${moduleTitle}-${action.value}`
+            `${moduleTitle.toLowerCase()}-${action.value}`
         );
 
-        console.log('Formatted Permissions:', formattedPermissions);
+        dispatch(updatePermission({ 
+            id: currentPermission._id,
+            permissionData: { module: moduleTitle, actions: formattedPermissions }
+        }))
+        .unwrap()
+        .then(() => {
+            dispatch(getPermissions());
+        })
+        .catch(error => console.error('Failed to update permission:', error));
+
+        // Reset state after adding the permissions
+        setModuleTitle('');
+        setSelectedActions([]);
     };
+
     // Custom NoOptionsMessage component to display a custom message
     const NoOptionsMessage = (props) => (
         <components.NoOptionsMessage {...props}>
             Write to create
         </components.NoOptionsMessage>
     );
+
     return (
         <div className="max-w-3xl mx-auto p-6 h-94 w-150">
             <h1 className="text-2xl font-semibold mb-6 text-primary">Edit Permissions</h1>
@@ -75,7 +93,7 @@ const EditPermission = () => {
                 <label className="block text-gray-700 text-sm font-medium mb-2">Module Title</label>
                 <input
                     type="text"
-                    value={currentPermission?.module?.charAt(0).toUpperCase() + moduleTitle.slice(1)}
+                    value={moduleTitle}
                     onChange={handleModuleTitleChange}
                     placeholder="Enter module title"
                     className="border border-gray-300 rounded-md p-2 w-full"
@@ -99,7 +117,7 @@ const EditPermission = () => {
             <button
                 onClick={handleAddPermission}
                 className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-blue-700 float-right"
-                >
+            >
                 Update Permission
             </button>
         </div>

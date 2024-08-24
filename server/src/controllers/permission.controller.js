@@ -29,7 +29,7 @@ export const GetAllPermissions = asyncHandler(async (req, res, next) => {
     // Build the query object
     const query = {}; 
     if (search) {
-      query.name = { $regex: search, $options: "i" };
+      query.module = { $regex: search, $options: "i" };
     }
     if (filter) {
       query.permissions = { $in: filter.split(",") };
