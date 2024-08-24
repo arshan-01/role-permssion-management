@@ -5,7 +5,9 @@ import {
   getRoleById,
   createRole,
   updateRole,
-  softDeleteRole
+  softDeleteRole,
+  parmanentDeleteRole,
+  restoreRole
 } from './role.service';
 
 const roleSlice = createSlice({
@@ -81,8 +83,7 @@ const roleSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-
-      // Delete Role
+      // Soft Delete Role
       .addCase(softDeleteRole.pending, (state) => {
         state.status = 'loading';
       })
@@ -92,7 +93,29 @@ const roleSlice = createSlice({
       .addCase(softDeleteRole.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+      })
+      // Parmanent Delete Role
+      .addCase(parmanentDeleteRole.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(parmanentDeleteRole.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+      })
+      .addCase(parmanentDeleteRole.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      // Delete Role
+      .addCase(restoreRole.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(restoreRole.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+      })
+      .addCase(restoreRole.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
   }
 });
 export const { setCurrentRoleId, clearCurrentRole, updateRoleOnLocal } = roleSlice.actions;
