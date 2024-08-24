@@ -25,7 +25,7 @@ const CreatePermission = () => {
     setSelectedActions(selectedOptions || []);
   };
 
-  const handleAddPermission = () => {
+  const handleCreatePermission = () => {
     // if (!moduleTitle || selectedActions.length === 0) {
     //   console.error('Module title and actions are required');
     //   return;
@@ -41,7 +41,9 @@ const CreatePermission = () => {
     dispatch(createPermission({ module: moduleTitle, actions: formattedPermissions }))
     .unwrap()
     .then(() => {
-      dispatch(getPermissions());
+      dispatch(getPermissions(
+        { page: 1, limit: 10, sort: 'asc', search: '' , isDeleted : false }
+      ));
     })
     // Reset state after adding the permissions
     setModuleTitle('');
@@ -83,10 +85,10 @@ const CreatePermission = () => {
       </div>
 
       <button
-        onClick={handleAddPermission}
+        onClick={handleCreatePermission}
         className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-blue-700 float-right"
       >
-        Add Permission
+        Create Permission
       </button>
     </div>
   );
