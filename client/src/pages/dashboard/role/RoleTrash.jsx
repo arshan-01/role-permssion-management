@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
+import {getRoles, parmanentDeleteRole } from '../../../redux/features/role/role.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
-import components from '../../../components/Modal/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
@@ -49,7 +48,7 @@ const RoleTrash = () => {
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({
-        thunkFunction: deleteRole,
+        thunkFunction: parmanentDeleteRole,
         fetchFunction: getRoles,
         fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
         dispatch,

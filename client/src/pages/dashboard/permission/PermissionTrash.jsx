@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {deletePermission, getPermissions } from '../../../redux/features/permission/permission.service';
+import {getPermissions, parmanentDeletePermission } from '../../../redux/features/permission/permission.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
-import components from '../../../components/Modal/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
@@ -57,7 +56,7 @@ const PermissionTrash = () => {
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({
-        thunkFunction: deletePermission,
+        thunkFunction: parmanentDeletePermission,
         fetchFunction: getPermissions,
         fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
         dispatch,

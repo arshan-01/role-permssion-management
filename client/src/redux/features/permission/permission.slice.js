@@ -5,7 +5,7 @@ import {
   getPermissionById,
   createPermission,
   updatePermission,
-  deletePermission,
+  softDeletePermission,
   getActionsList
 } from './permission.service';
 
@@ -98,13 +98,13 @@ const permissionSlice = createSlice({
         state.error = action.error.message;
       })
       // Delete a permission
-      .addCase(deletePermission.pending, (state) => {
+      .addCase(softDeletePermission.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(deletePermission.fulfilled, (state, action) => {
+      .addCase(softDeletePermission.fulfilled, (state, action) => {
         state.status = 'succeeded';
       })
-      .addCase(deletePermission.rejected, (state, action) => {
+      .addCase(softDeletePermission.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
