@@ -12,7 +12,9 @@ const config = {
         getRoleById: '/role',
         createRole: '/role/create',
         updateRole: '/role/update',
-        deleteRole: '/role',
+        softDeleteRole: '/role',
+        parmanentDeleteRole: '/role/delete',
+        restoreRole : '/role/restore',
 
         // Permission endpoints
         getPermissions: '/permission/all',
@@ -20,7 +22,9 @@ const config = {
         getPermissionById: '/permission',
         createPermission: '/permission/create',
         updatePermission: '/permission/update',
-        deletePermission: '/permission',
+        softDeletePermission: '/permission',
+        parmanentDeletePermission: '/permission/delete',
+        restorePermission : '/permission/restore',
 
 
         // Other endpoints can be added here

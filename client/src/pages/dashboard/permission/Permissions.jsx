@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {deletePermission, getPermissions } from '../../../redux/features/permission/permission.service';
+import {softDeletePermission, getPermissions } from '../../../redux/features/permission/permission.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Modal/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
@@ -55,7 +55,7 @@ const Permissions = () => {
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({
-        thunkFunction: deletePermission,
+        thunkFunction: softDeletePermission,
         fetchFunction: getPermissions,
         fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder },
         dispatch,

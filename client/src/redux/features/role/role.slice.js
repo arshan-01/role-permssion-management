@@ -5,7 +5,7 @@ import {
   getRoleById,
   createRole,
   updateRole,
-  deleteRole
+  softDeleteRole
 } from './role.service';
 
 const roleSlice = createSlice({
@@ -83,13 +83,13 @@ const roleSlice = createSlice({
       })
 
       // Delete Role
-      .addCase(deleteRole.pending, (state) => {
+      .addCase(softDeleteRole.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(deleteRole.fulfilled, (state, action) => {
+      .addCase(softDeleteRole.fulfilled, (state, action) => {
         state.status = 'succeeded';
       })
-      .addCase(deleteRole.rejected, (state, action) => {
+      .addCase(softDeleteRole.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

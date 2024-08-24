@@ -12,6 +12,7 @@ const DataTable = ({
   data,
   onEdit,
   onDelete,
+  onRestore,
   downloadData,
   itemsPerPage,
   onItemsPerPageChange,
@@ -187,7 +188,7 @@ const DataTable = ({
                         {
                           // Check if the data is deleted
                           deleted ? (
-                            <button className="text-black">
+                            <button onClick={() => onRestore(row._id)} className="text-green-500" >
                               <FaUndo />
                             </button>
                           ) : (

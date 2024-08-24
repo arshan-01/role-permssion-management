@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {deletePermission, getPermissions } from '../../../redux/features/permission/permission.service';
-import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
-import components from '../../../components/Modal/Index';
+import {getPermissions, parmanentDeletePermission, restorePermission } from '../../../redux/features/permission/permission.service';
+import useDebouncedEffect, { useGlobalDeleteHandler, useGlobalRestoreHandler } from '../../../utils/GlobalApiHandler';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
@@ -55,9 +54,9 @@ const PermissionTrash = () => {
         // navigate to edit permission page
         navigate(`/dashboard/permission/update`);
     };
-
+    // Handle the delete permission button click
     const { handleDeleteClick } = useGlobalDeleteHandler({
-        thunkFunction: deletePermission,
+        thunkFunction: parmanentDeletePermission,
         fetchFunction: getPermissions,
         fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
         dispatch,
@@ -67,7 +66,19 @@ const PermissionTrash = () => {
             // Additional props you might want to pass
         },
     });
-
+    // Restore the permission from the trash
+    const { handleRestoreClick } = useGlobalRestoreHandler({
+        thunkFunction: restorePermission,
+        fetchFunction: getPermissions,
+        fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
+        dispatch,
+        openModal: (modalConfig) => dispatch(openModal(modalConfig)),
+        componentName: 'RestoreConfirmation',
+        componentProps: {
+            // Additional props you might want to pass
+        },
+    });
+    // Handle the items per page change
     const handleItemsPerPageChange = (value) => {
         setItemsPerPage(value);
         setCurrentPage(1); // Reset to the first page
@@ -118,6 +129,7 @@ const PermissionTrash = () => {
                     data={permissions}
                     onEdit={handleEdit}
                     onDelete={handleDeleteClick}
+                    onRestore={handleRestoreClick}
                     totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     onItemsPerPageChange={handleItemsPerPageChange}

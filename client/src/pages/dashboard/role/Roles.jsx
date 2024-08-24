@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRole, getRoles } from '../../../redux/features/role/role.service';
+import { softDeleteRole, getRoles } from '../../../redux/features/role/role.service';
 import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
 import components from '../../../components/Modal/Index';
 import { openModal } from '../../../redux/features/modal/modal.slice';
@@ -49,7 +49,7 @@ const Roles = () => {
     };
 
     const { handleDeleteClick } = useGlobalDeleteHandler({
-        thunkFunction: deleteRole,
+        thunkFunction: softDeleteRole,
         fetchFunction: getRoles,
         fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder },
         dispatch,

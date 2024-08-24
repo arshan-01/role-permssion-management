@@ -28,6 +28,14 @@ export const updatePermission = createAsyncThunk('permissions/updatePermission',
   return handleResponse(api.patch(`${config.endPoints.updatePermission}/${id}`, permissionData));
 });
 
-export const deletePermission = createAsyncThunk('permissions/deletePermission', async (id) => {
-  return handleResponse(api.delete(`${config.endPoints.deletePermission}/${id}`));
+export const softDeletePermission = createAsyncThunk('permissions/softDeletePermission', async (id) => {
+  return handleResponse(api.delete(`${config.endPoints.softDeletePermission}/${id}`));
+});
+
+export const parmanentDeletePermission = createAsyncThunk('permissions/parmanentDeletePermission', async (id) => {
+  return handleResponse(api.delete(`${config.endPoints.parmanentDeletePermission}/${id}`));
+});
+
+export const restorePermission = createAsyncThunk('permissions/restorePermission', async (id) => {
+  return handleResponse(api.patch(`${config.endPoints.restorePermission}/${id}`));
 });
