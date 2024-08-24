@@ -69,7 +69,7 @@ const EditPermission = () => {
         }))
         .unwrap()
         .then(() => {
-            dispatch(getPermissions());
+            dispatch(getPermissions({ page: 1, limit: 10, sort: 'asc', search: '', isDeleted: false }));
         })
         .catch(error => console.error('Failed to update permission:', error));
 

@@ -131,7 +131,7 @@ const CreateRole = () => {
   return (
     <DashboardLayout>
             <Breadcrumb
-                items={[{ href: '/dashboard', label: 'Dashboard' }, {href: '/dashboard/roles', label: 'Roles'}, { label: 'Add' }]}
+                items={[{ href: '/dashboard', label: 'Dashboard' }, {href: '/dashboard/roles', label: 'Roles'}, { label: 'Create' }]}
             />
 
     <div className="overflow-x-auto py-10">
@@ -148,7 +148,7 @@ const CreateRole = () => {
             onClick={handleAddRole}
             className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
           >
-            Add Role
+            Create Role
           </button>
         </div>
       </div>
