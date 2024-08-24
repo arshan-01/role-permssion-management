@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
-import { SidebarItem, SidebarLabel } from './UI/sidebar';
+import { SidebarItem, SidebarLabel } from '../UI/sidebar';
 
 function SidebarMenu({ item, userPermissions }) {
   const [isOpen, setIsOpen] = useState(false);

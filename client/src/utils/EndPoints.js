@@ -8,20 +8,19 @@ const config = {
         logout: '/auth/logout',
 
         // Role endpoints
-        getRoles: '/role',
+        getRoles: '/role/all',
         getRoleById: '/role',
-        createRole: '/role',
-        updateRole: '/role',
+        createRole: '/role/create',
+        updateRole: '/role/update',
         deleteRole: '/role',
 
         // Permission endpoints
-        getPermissions: '/permission',
+        getPermissions: '/permission/all',
         getActionsList: '/permission/actions-list',
         getPermissionById: '/permission',
-        createPermission: '/permission',
-        updatePermission: '/permission',
+        createPermission: '/permission/create',
+        updatePermission: '/permission/update',
         deletePermission: '/permission',
-
 
 
         // Other endpoints can be added here

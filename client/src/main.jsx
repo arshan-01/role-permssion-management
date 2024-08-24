@@ -5,8 +5,8 @@ import './index.css'
 import App from './App.jsx'
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './redux/store'; // Adjust the path if necessaryimport LoadingSpinner from './components/LoadingSpinner';
-import GlobalsModal from './components/globalModal.jsx';
-import LoadingSpinner from './components/LoadingSpinner';
+import GlobalModal from './components/Modal/GlobalModal';
+import LoadingSpinner from './components/Spinner/LoadingSpinner';
 import { Provider } from 'react-redux';
 
 createRoot(document.getElementById('root')).render(
@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <PersistGate loading={LoadingSpinner} persistor={persistor}>
         <App />
-        <GlobalsModal />
+        <GlobalModal />
         <Toaster closeButton richColors expand={true} position="top-right" duration={4000} /> 
         </PersistGate>
     </Provider>

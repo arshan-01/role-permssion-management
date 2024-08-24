@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import { Avatar } from './UI/avatar'
+import { Avatar } from '../UI/avatar'
 import {
   Dropdown,
   DropdownButton,
@@ -7,8 +7,8 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from './UI/dropdown'
-import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from './UI/navbar'
+} from '../UI/dropdown'
+import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from '../UI/navbar'
 import {
   ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,

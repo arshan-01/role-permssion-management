@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
-import Breadcrumb from '../../../components/Breadcrumb';
+import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { getRoleById, updateRole } from '../../../redux/features/role/role.service';

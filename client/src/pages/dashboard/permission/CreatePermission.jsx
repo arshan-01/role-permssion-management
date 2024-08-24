@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Creatable from 'react-select/creatable';
 import { components } from 'react-select';
-import ListPermissions from './ListPermissions';
+import { useDispatch } from 'react-redux';
+import { createPermission, getPermissions } from '../../../redux/features/permission/permission.service';
 
 // Options for the select dropdown
 const actionOptions = [
@@ -12,8 +12,8 @@ const actionOptions = [
   { value: 'delete', label: 'Delete' },
 ];
 
-const AddPermissions = () => {
-  const navigate = useNavigate();
+const CreatePermission = () => {
+  const dispatch = useDispatch();
   const [moduleTitle, setModuleTitle] = useState('');
   const [selectedActions, setSelectedActions] = useState([]);
 
@@ -26,18 +26,23 @@ const AddPermissions = () => {
   };
 
   const handleAddPermission = () => {
-    if (!moduleTitle || selectedActions.length === 0) {
-      console.error('Module title and actions are required');
-      return;
-    }
+    // if (!moduleTitle || selectedActions.length === 0) {
+    //   console.error('Module title and actions are required');
+    //   return;
+    // }
 
     // Create formatted permissions list
     const formattedPermissions = selectedActions.map(action =>
       `${moduleTitle.toLowerCase()}-${action.value}`
     );
 
-    console.log('Formatted Permissions:', formattedPermissions);
 
+    console.log('Formatted Permissions:', { moduleTitle, formattedPermissions });
+    dispatch(createPermission({ module: moduleTitle, actions: formattedPermissions }))
+    .unwrap()
+    .then(() => {
+      dispatch(getPermissions());
+    })
     // Reset state after adding the permissions
     setModuleTitle('');
     setSelectedActions([]);
@@ -49,8 +54,8 @@ const AddPermissions = () => {
     </components.NoOptionsMessage>
   );
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-semibold mb-6 text-primary">Add Permissions</h1>
+    <div className="max-w-3xl mx-auto p-6 h-94 w-150">
+      <h1 className="text-2xl font-semibold mb-6 text-primary">Create Permissions</h1>
 
       <div className="mb-6">
         <label className="block text-gray-700 text-sm font-medium mb-2">Module Title</label>
@@ -79,19 +84,12 @@ const AddPermissions = () => {
 
       <button
         onClick={handleAddPermission}
-        className="bg-primary text-white px-6 py-3 rounded-md hover:bg-blue-700"
+        className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-blue-700 float-right"
       >
         Add Permission
       </button>
-      <button
-        onClick={() => navigate("/permission/edit")}
-        className="bg-primary mx-7 text-white px-6 py-3 rounded-md hover:bg-blue-700"
-      >
-        Update Permission
-      </button>
-      <ListPermissions />
     </div>
   );
 };
 
-export default AddPermissions;
+export default CreatePermission;
