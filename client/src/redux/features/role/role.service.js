@@ -28,3 +28,7 @@ export const softDeleteRole = createAsyncThunk('roles/softDeleteRole', async (id
 export const parmanentDeleteRole = createAsyncThunk('roles/parmanentDeleteRole', async (id) => {
   return handleResponse(api.delete(`${config.endPoints.parmanentDeleteRole}/${id}`));
 });
+
+export const restoreRole = createAsyncThunk('roles/restoreRole', async (id) => {
+  return handleResponse(api.patch(`${config.endPoints.restoreRole}/${id}`));
+});

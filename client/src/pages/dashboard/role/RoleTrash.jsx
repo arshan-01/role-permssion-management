@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getRoles, parmanentDeleteRole } from '../../../redux/features/role/role.service';
-import useDebouncedEffect, { useGlobalDeleteHandler } from '../../../utils/GlobalApiHandler';
+import {getRoles, parmanentDeleteRole, restoreRole } from '../../../redux/features/role/role.service';
+import useDebouncedEffect, { useGlobalDeleteHandler, useGlobalRestoreHandler } from '../../../utils/GlobalApiHandler';
 import { openModal } from '../../../redux/features/modal/modal.slice';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
@@ -46,7 +46,7 @@ const RoleTrash = () => {
         // navigate to edit role page
         navigate(`/dashboard/role/update`);
     };
-
+    // Handle the delete role button click
     const { handleDeleteClick } = useGlobalDeleteHandler({
         thunkFunction: parmanentDeleteRole,
         fetchFunction: getRoles,
@@ -58,6 +58,18 @@ const RoleTrash = () => {
             // Additional props you might want to pass
         },
     });
+        // Restore the permission from the trash
+        const { handleRestoreClick } = useGlobalRestoreHandler({
+            thunkFunction: restoreRole,
+            fetchFunction: getRoles,
+            fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
+            dispatch,
+            openModal: (modalConfig) => dispatch(openModal(modalConfig)),
+            componentName: 'RestoreConfirmation',
+            componentProps: {
+                // Additional props you might want to pass
+            },
+        });
 
     const handleItemsPerPageChange = (value) => {
         setItemsPerPage(value);
@@ -91,6 +103,7 @@ const RoleTrash = () => {
                     data={deletedRoles}
                     onEdit={handleEdit}
                     onDelete={handleDeleteClick}
+                    onRestore={handleRestoreClick}
                     totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     onItemsPerPageChange={handleItemsPerPageChange}

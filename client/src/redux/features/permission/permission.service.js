@@ -35,3 +35,7 @@ export const softDeletePermission = createAsyncThunk('permissions/softDeletePerm
 export const parmanentDeletePermission = createAsyncThunk('permissions/parmanentDeletePermission', async (id) => {
   return handleResponse(api.delete(`${config.endPoints.parmanentDeletePermission}/${id}`));
 });
+
+export const restorePermission = createAsyncThunk('permissions/restorePermission', async (id) => {
+  return handleResponse(api.patch(`${config.endPoints.restorePermission}/${id}`));
+});
