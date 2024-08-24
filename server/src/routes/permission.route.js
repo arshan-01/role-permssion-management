@@ -44,7 +44,7 @@ router.post("/create", CreatePermission);
 
 /**
  * @swagger
- * /permission:
+ * /permission/all:
  *   get:
  *     summary: Retrieve all permissions with optional filters, sorting, and pagination
  *     tags: [Permissions]
@@ -123,7 +123,7 @@ router.post("/create", CreatePermission);
  *       500:
  *         description: Internal server error
  */
-router.get("/", GetAllPermissions);
+router.get("/all", GetAllPermissions);
 
 /**
  * @swagger
@@ -183,7 +183,7 @@ router.get("/:id", GetPermissionById);
 
 /**
  * @swagger
- * /permission/{id}:
+ * /permission/update/{id}:
  *   patch:
  *     summary: Update a permission by ID
  *     tags: [Permissions]
@@ -217,7 +217,7 @@ router.get("/:id", GetPermissionById);
  *       500:
  *         description: Internal server error
  */
-router.patch("/:id", UpdatePermission);
+router.patch("/update/:id", UpdatePermission);
 
 /**
  * @swagger

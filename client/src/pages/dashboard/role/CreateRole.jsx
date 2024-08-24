@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getActionsList } from '../../../redux/features/permission/permission.service';
 import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from '../../../layouts/DashboardLayout';
-import Breadcrumb from '../../../components/Breadcrumb';
+import Breadcrumb from '../../../components/BreadCrumb/Breadcrumb';
 import { createRole } from '../../../redux/features/role/role.service';
 
 const CreateRole = () => {

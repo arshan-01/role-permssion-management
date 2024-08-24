@@ -20,7 +20,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /role:
+ * /role/create:
  *   post:
  *     summary: Create a new role
  *     tags: [Roles]
@@ -49,11 +49,11 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/', CreateRole);
+router.post('/create', CreateRole);
 
 /**
  * @swagger
- * /role:
+ * /role/all:
  *   get:
  *     summary: Retrieve all roles with optional filters, sorting, and pagination
  *     tags: [Roles]
@@ -142,7 +142,7 @@ router.post('/', CreateRole);
  *       500:
  *         description: Internal server error
  */
-router.get('/', GetAllRoles);
+router.get('/all', GetAllRoles);
 
 /**
  * @swagger
@@ -185,7 +185,7 @@ router.get('/:id', GetRoleById);
 
 /**
  * @swagger
- * /role/{id}:
+ * /role/update/{id}:
  *   patch:
  *     summary: Update a role by ID
  *     tags: [Roles]
@@ -219,7 +219,7 @@ router.get('/:id', GetRoleById);
  *       500:
  *         description: Internal server error
  */
-router.patch('/:id', UpdateRole);
+router.patch('/update/:id', UpdateRole);
 
 /**
  * @swagger

@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaTimes } from 'react-icons/fa'; // Importing the cross icon from react-icons
 import components from './Index';
-import { closeModal } from '../redux/features/modal/modal.slice';
+import { closeModal } from '../../redux/features/modal/modal.slice';
 
 const GlobalModal = () => {
   const dispatch = useDispatch();

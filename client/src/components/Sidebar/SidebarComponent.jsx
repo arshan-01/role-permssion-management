@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from './UI/avatar';
+import { Avatar } from '../UI/avatar';
 import {
   Dropdown,
   DropdownButton,
@@ -7,7 +7,7 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from './UI/dropdown';
+} from '../UI/dropdown';
 import {
   Sidebar,
   SidebarBody,
@@ -18,7 +18,7 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
-} from './UI/sidebar';
+} from '../UI/sidebar';
 import {
   ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
@@ -87,12 +87,6 @@ const sidebarItems = [
         permissions: ["permission-view"],
       },
       {
-        label: "Create Permission",
-        icon: FaPlus,
-        link: "/dashboard/permission/create",
-        permissions: ["permission-create"],
-      },
-      {
         label: "Trash",
         icon: FaTrash,
         link: "/dashboard/permissions/trash",
@@ -103,7 +97,7 @@ const sidebarItems = [
 ];
 
 function SidebarComponent() {
-  const userPermissions = ["role-create", "role-view", "role-delete", "permission-create"
+  const userPermissions = ["role-create", "role-view", "role-delete", "permission-create", "permission-view", "permission-delete"
   ]; // Example permissions for the current user
 
   return (

@@ -2,12 +2,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import EditRole from '../pages/dashboard/role/EditRole';
-import AddPermissions from '../pages/dashboard/permission/AddPermissions';
-import EditPermissions from '../pages/dashboard/permission/EditPermissions';
-import RoleList from '../pages/dashboard/role/RoleList';
 import CreateRole from '../pages/dashboard/role/CreateRole';
 import Dashboard from '../pages/dashboard/dashboard/dashboard';
 import RoleTrash from '../pages/dashboard/role/RoleTrash';
+import Roles from '../pages/dashboard/role/Roles';
+import Permissions from '../pages/dashboard/permission/Permissions';
+import PermissionTrash from '../pages/dashboard/permission/permissionTrash';
 
 function AppRouter() {
   return (
@@ -18,9 +18,9 @@ function AppRouter() {
         <Route path="/dashboard/role/create" element={<CreateRole />} />
         <Route path="/dashboard/role/update" element={<EditRole />} />
         <Route path="/dashboard/roles/trash" element={<RoleTrash />} />
-        <Route path="/dashboard/roles" element={<RoleList />} />
-        <Route path="/dashboard/permission/add" element={<AddPermissions />} />
-        <Route path="/dashboard/permission/update" element={<EditPermissions />} />
+        <Route path="/dashboard/roles" element={<Roles />} />
+        <Route path="/dashboard/permissions" element={<Permissions />} />
+        <Route path="/dashboard/permissions/trash" element={<PermissionTrash />} />
       </Routes>
     </Router>
   );

@@ -10,11 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { setCurrentRoleId } from '../../../redux/features/role/role.slice';
 import DataTable from '../../../components/DataTable/DataTable';
 
-const RoleTrash = () => {
+const Roles = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const deletedRoles = useSelector(state => state?.role?.roles?.roles) || [];
-    // const deletedRoles = roles.filter(role => role?.isDeleted === true);
+    // const { DataTable } = components;
+    const roles = useSelector(state => state?.role?.roles?.roles) || [];
     const totalPages = useSelector(state => state?.role?.roles?.pages) || 0;
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +35,7 @@ const RoleTrash = () => {
                 currentPage,
                 sortColumn,
                 sortOrder,
-                isDeleted: true
+                isDeleted: false
             }));
         },
         [searchQuery, filter, currentPage, itemsPerPage, sortColumn, sortOrder],
@@ -51,7 +51,7 @@ const RoleTrash = () => {
     const { handleDeleteClick } = useGlobalDeleteHandler({
         thunkFunction: deleteRole,
         fetchFunction: getRoles,
-        fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder, isDeleted: true },
+        fetchParams: { search: searchQuery, limit: itemsPerPage, filter, currentPage, sortColumn, sortOrder },
         dispatch,
         openModal: (modalConfig) => dispatch(openModal(modalConfig)),
         componentName: 'DeleteConfirmation',
@@ -79,17 +79,29 @@ const RoleTrash = () => {
         { key: 'status', label: 'Status' },
         { key: 'createdAt', label: 'Created At' },
     ];
+    // Handle the create role button click
+    const HaandleCreateRole = () => {
+        // navigate to create role page
+        navigate("/dashboard/role/create");
+    };
     return (
         <DashboardLayout>
             <Breadcrumb
-                items={[{ href: '/dashboard', label: 'Dashboard' }, {href : '/dashboard/roles', label: 'Roles' }, {label: 'Trash' }]}
+                items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Roles' }]}
             />
+            <div className="flex items-center float-right">
+                {/* <Link to="/dashboard/role/create" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                    Create New
+                </Link> */}
+                <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                    Create New
+                </button>
+            </div>
             <div className="container mx-auto p-4">
                 <DataTable
-                    tableTitle="Deleted Roles Details"
-                    deleted = {true}
+                    tableTitle="Roles Details"
                     columns={columns}
-                    data={deletedRoles}
+                    data={roles}
                     onEdit={handleEdit}
                     onDelete={handleDeleteClick}
                     totalItems={totalItems}
@@ -110,4 +122,4 @@ const RoleTrash = () => {
     );
 };
 
-export default RoleTrash;
+export default Roles;

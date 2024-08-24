@@ -53,7 +53,7 @@ export const GetAllPermissions = asyncHandler(async (req, res, next) => {
     res
       .status(200)
       .json(
-        new ApiResponse(200, permissions, "Permissions retrieved successfully"),
+        new ApiResponse(200, { permissions, pages, total}, "Permissions retrieved successfully"),
       );
   } catch (error) {
     next(new ApiError(500, "Internal server error", [error.message]));

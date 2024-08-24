@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import {FaTrash, FaSort, FaRegEdit, FaUndo } from 'react-icons/fa';
 import { IoDownload } from "react-icons/io5";
 import { FaRegTrashCan, FaSortDown, FaSortUp } from "react-icons/fa6";
-import StatusBadge from './StatusBadge';
-import Pagination from './Pagination';
-import { formatDate } from '../utils/formatDate';
+import StatusBadge from '../Badge/StatusBadge';
+import Pagination from '../Pagination/Pagination';
+import { formatDate } from '../../utils/formatDate';
 const DataTable = ({
   tableTitle,
   deleted,
@@ -172,6 +172,12 @@ const DataTable = ({
                             <StatusBadge role={row.role} />
                           ) : column.key === 'createdAt' ? (
                             formatDate(row[column.key])
+                          ) : column.key === 'actions' ? (
+                            row[column.key].map((action, index) => (
+                              <span key={index} className="mr-2">
+                                <StatusBadge action={action.split("-")[1]} />
+                              </span>
+                            ))
                           ) : (
                             row[column.key]
                           )}

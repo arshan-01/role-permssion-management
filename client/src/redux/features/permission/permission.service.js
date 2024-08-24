@@ -4,8 +4,8 @@ import handleResponse from '../../../utils/responseHandler';
 import { config } from '../../../utils/EndPoints';
 import api from '../../../utils/Api';
 // Thunks for permission operations
-export const getPermissions = createAsyncThunk('permissions/getPermissions', async () => {
-  return handleResponse(api.get(config.endPoints.getPermissions));
+export const getPermissions = createAsyncThunk('permissions/getPermissions', async ({search, filter, currentPage, limit, sortColumn, sortOrder, isDeleted }) => {
+  return handleResponse(api.get(config.endPoints.getPermissions, { params : { search, filter, currentPage, limit, sortColumn, sortOrder, isDeleted } }));
 });
 
 export const getActionsList = createAsyncThunk('permissions/getActionsList', async () => {
@@ -20,11 +20,12 @@ export const getPermissionById = createAsyncThunk('permissions/getPermissionById
 });
 
 export const createPermission = createAsyncThunk('permissions/createPermission', async (permissionData) => {
+  console.log("🚀 ~ createPermission ~ permissionData:", permissionData)
   return handleResponse(api.post(config.endPoints.createPermission, permissionData));
 });
 
 export const updatePermission = createAsyncThunk('permissions/updatePermission', async ({ id, permissionData }) => {
-  return handleResponse(api.put(`${config.endPoints.updatePermission}/${id}`, permissionData));
+  return handleResponse(api.patch(`${config.endPoints.updatePermission}/${id}`, permissionData));
 });
 
 export const deletePermission = createAsyncThunk('permissions/deletePermission', async (id) => {
