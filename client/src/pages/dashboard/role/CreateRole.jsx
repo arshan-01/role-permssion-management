@@ -121,13 +121,6 @@ const CreateRole = () => {
     );
   };
 
-  // redirect to edit role page
-  const handleUpdate = () => {
-    console.log("Redirect to edit role page");
-    // navigate to edit role page
-    navigate("/dashboard/role/update");
-  };
-
   return (
     <DashboardLayout>
             <Breadcrumb

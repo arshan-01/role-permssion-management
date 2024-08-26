@@ -1,1 +1,1 @@
-export const DB_NAME = "role-permission";
+export const DB_NAME = 'role-permission'

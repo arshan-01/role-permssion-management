@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express'
 import {
   CreatePermission,
   GetAllPermissions,
@@ -7,10 +7,10 @@ import {
   SoftDeletePermission,
   RestorePermission,
   PermanentDeletePermission,
-  GetPermissionsActionsList,
-} from "../controllers/permission.controller.js";
+  GetPermissionsActionsList
+} from '../controllers/permission.controller.js'
 
-const router = express.Router();
+const router = express.Router()
 /**
  * @swagger
  * /permission/create:
@@ -40,7 +40,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/create", CreatePermission);
+router.post('/create', CreatePermission)
 
 /**
  * @swagger
@@ -123,7 +123,7 @@ router.post("/create", CreatePermission);
  *       500:
  *         description: Internal server error
  */
-router.get("/all", GetAllPermissions);
+router.get('/all', GetAllPermissions)
 
 /**
  * @swagger
@@ -144,7 +144,7 @@ router.get("/all", GetAllPermissions);
  *       500:
  *         description: Internal server error
  */
-router.get("/actions-list", GetPermissionsActionsList);
+router.get('/actions-list', GetPermissionsActionsList)
 /**
  * @swagger
  * /permission/{id}:
@@ -179,7 +179,7 @@ router.get("/actions-list", GetPermissionsActionsList);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", GetPermissionById);
+router.get('/:id', GetPermissionById)
 
 /**
  * @swagger
@@ -217,7 +217,7 @@ router.get("/:id", GetPermissionById);
  *       500:
  *         description: Internal server error
  */
-router.patch("/update/:id", UpdatePermission);
+router.patch('/update/:id', UpdatePermission)
 
 /**
  * @swagger
@@ -240,7 +240,7 @@ router.patch("/update/:id", UpdatePermission);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", SoftDeletePermission);
+router.delete('/:id', SoftDeletePermission)
 
 /**
  * @swagger
@@ -263,7 +263,7 @@ router.delete("/:id", SoftDeletePermission);
  *       500:
  *         description: Internal server error
  */
-router.patch("/restore/:id", RestorePermission);
+router.patch('/restore/:id', RestorePermission)
 
 /**
  * @swagger
@@ -286,6 +286,6 @@ router.patch("/restore/:id", RestorePermission);
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", PermanentDeletePermission);
+router.delete('/delete/:id', PermanentDeletePermission)
 
-export default router;
+export default router

@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 export const useGlobalDeleteHandler = ({ thunkFunction, fetchFunction, fetchParams, dispatch, openModal, componentName, componentProps }) => {
   
   const handleDeleteClick = (id) => {
-    console.log("🚀 ~ handleDeleteClick ~ id:", id)
     openModal({
       componentName,
       componentProps: {
@@ -26,7 +25,6 @@ export const useGlobalDeleteHandler = ({ thunkFunction, fetchFunction, fetchPara
 export const useGlobalRestoreHandler = ({ thunkFunction, fetchFunction, fetchParams, dispatch, openModal, componentName, componentProps }) => {
   
   const handleRestoreClick = (id) => {
-    console.log("🚀 ~ handleRestoreClick ~ id:", id)
     openModal({
       componentName,
       componentProps: {
