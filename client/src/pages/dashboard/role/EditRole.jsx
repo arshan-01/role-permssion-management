@@ -164,7 +164,7 @@ const EditRole = () => {
         <button
           onClick={toggleActiveState}
           className={`relative inline-flex items-center h-6 rounded-full w-12 ${
-            currentRole?.status == "active" ? "bg-green-500" : "bg-gray-300"
+            currentRole?.status == "active" ? "bg-green-500" : "bg-gray-3"
           } transition-colors duration-200 ease-in-out`}
         >
           <span

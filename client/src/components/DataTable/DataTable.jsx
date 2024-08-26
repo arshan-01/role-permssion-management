@@ -124,25 +124,25 @@ const DataTable = ({
                     {columns.map((column) => (
                       <th
                         key={column.key}
-                        className="relative py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-xs cursor-pointer"
+                        className="relative py-2 px-4 border-b border-gray-200 text-gray-7 font-semibold text-xs cursor-pointer"
                         onClick={() => handleSortIconClick(column.key)}
                       >
                         <div className="flex items-center">
                           {column.label}
                           {sortColumn === column.key ? (
                             <span className="ml-2 flex flex-col items-center justify-center">
-                              <FaSortUp className={`${sortOrder === 'asc' ? 'text-black' : 'text-gray-400'} -mb-1`} />
-                              <FaSortDown className={`${sortOrder === 'desc' ? 'text-black' : 'text-gray-400'} -mt-1`} />
+                              <FaSortUp className={`${sortOrder === 'asc' ? 'text-black' : 'text-gray-5'} -mb-1`} />
+                              <FaSortDown className={`${sortOrder === 'desc' ? 'text-black' : 'text-gray-5'} -mt-1`} />
                             </span>
                           ) : (
                             <span className="ml-2">
-                              <FaSort className="text-gray-400" />
+                              <FaSort className="text-gray-5" />
                             </span>
                           )}
                         </div>
                       </th>
                     ))}
-                    <th className="py-2 px-4 border-b border-gray-200 text-gray-700 font-semibold text-xs">
+                    <th className="py-2 px-4 border-b border-gray-200 text-gray-7 font-semibold text-xs">
                       Actions
                     </th>
                   </tr>
@@ -160,7 +160,7 @@ const DataTable = ({
                       {columns.map((column) => (
                         <td
                           key={column.key}
-                          className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm"
+                          className="py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-7 text-sm"
                         >
                           {column.key === 'avatar' ? (
                             <div className="flex items-center">
@@ -184,7 +184,7 @@ const DataTable = ({
                           )}
                         </td>
                       ))}
-                      <td className="flex items-center space-x-2 py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-700 text-sm">
+                      <td className="items-center space-x-2 py-2 px-4 border-b-2 border-dotted border-gray-200 text-gray-7 text-sm">
                         {
                           // Check if the data is deleted
                           deleted ? (

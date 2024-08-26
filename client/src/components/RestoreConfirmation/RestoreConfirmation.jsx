@@ -28,7 +28,7 @@ const RestoreConfirmation = ({ onRestore }) => {
         </button>
         <button
           type="button"
-          className="px-4 py-2 rounded-lg text-gray-8 text-sm tracking-wide bg-gray-3 hover:bg-gray-300 active:bg-gray-3"
+          className="px-4 py-2 rounded-lg text-gray-8 text-sm tracking-wide bg-gray-3 hover:bg-gray-3 active:bg-gray-3"
           onClick={() => dispatch(closeModal())}
         >
           Cancel
