@@ -12,18 +12,18 @@ const Breadcrumb = ({ items }) => {
                 <ol className="list-reset flex text-sm">
                     {items.map((item, index) => (
                         <React.Fragment key={index}>
-                            {index > 0 && <li><span className="text-gray-500 mx-2">/</span></li>}
+                            {index > 0 && <li><span className="text-gray-6 mx-2">/</span></li>}
                             <li>
                                 {item.href ? (
                                     <Link
                                         to={item.href}
-                                        className={`text-gray-500 ${index === items.length - 1 ? 'text-blue-600' : 'hover:text-blue-600'}`}
+                                        className={`text-gray-6 ${index === items.length - 1 ? 'text-blue-600' : 'hover:text-blue-600'}`}
                                     >
                                         {item.label}
                                     </Link>
                                 ) : (
                                     <span
-                                        className={index === items.length - 1 ? 'text-blue-600' : 'text-gray-500'}
+                                        className={index === items.length - 1 ? 'text-blue-600' : 'text-gray-6'}
                                     >
                                         {item.label}
                                     </span>

@@ -90,7 +90,7 @@ const EditPermission = () => {
             <h1 className="text-2xl font-semibold mb-6 text-primary">Edit Permissions</h1>
 
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Module Title</label>
+                <label className="block text-gray-7 text-sm font-medium mb-2">Module Title</label>
                 <input
                     type="text"
                     value={moduleTitle}
@@ -101,7 +101,7 @@ const EditPermission = () => {
             </div>
 
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Select Actions</label>
+                <label className="block text-gray-7 text-sm font-medium mb-2">Select Actions</label>
                 <CreatableSelect
                     isMulti
                     options={actionOptions}

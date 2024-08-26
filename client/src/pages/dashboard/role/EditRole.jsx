@@ -160,11 +160,11 @@ const EditRole = () => {
         Update Role
       </button>
       <div className="flex items-center space-x-2 mx-9">
-        <span className="text-gray-700">{currentRole?.status == "active" ? "Active" : "Inactive"}</span>
+        <span className="text-gray-7">{currentRole?.status == "active" ? "Active" : "Inactive"}</span>
         <button
           onClick={toggleActiveState}
           className={`relative inline-flex items-center h-6 rounded-full w-12 ${
-            currentRole?.status == "active" ? "bg-green-500" : "bg-gray-300"
+            currentRole?.status == "active" ? "bg-green-500" : "bg-gray-3"
           } transition-colors duration-200 ease-in-out`}
         >
           <span
@@ -176,11 +176,11 @@ const EditRole = () => {
       </div>
     </div>
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-1">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">Category</th>
               {predefinedActions.map(action => (
-                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -193,7 +193,7 @@ const EditRole = () => {
                 </th>
               ))}
               {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -210,9 +210,9 @@ const EditRole = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {Object.keys(categoriesAndActions).map(category => (
               <tr key={category}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{category}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-9">{category}</td>
                 {predefinedActions.map(action => (
-                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-5">
                     {categoriesAndActions[category].includes(action) && (
                       <input
                         type="checkbox"
@@ -224,7 +224,7 @@ const EditRole = () => {
                   </td>
                 ))}
                 {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-5">
                     {categoriesAndActions[category].includes(action) && (
                       <input
                         type="checkbox"
