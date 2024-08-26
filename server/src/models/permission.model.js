@@ -1,32 +1,35 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const { Schema, model } = mongoose;
+const { Schema, model } = mongoose
 
 // Define the Permission schema
-const permissionSchema = new Schema({
-  module: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  actions: [
-    {
+const permissionSchema = new Schema(
+  {
+    module: {
       type: String,
+      required: true,
       trim: true
+    },
+    actions: [
+      {
+        type: String,
+        trim: true
+      }
+    ],
+    isDeleted: {
+      type: Boolean,
+      default: false
+    },
+    status: {
+      type: String,
+      default: 'active',
+      enum: ['active', 'inactive']
     }
-  ],
-  isDeleted: {
-    type: Boolean,
-    default: false
   },
-  status: {
-    type: String,
-    default: 'active',
-    enum: ['active', 'inactive']
-  }
-}, { timestamps: true });
+  { timestamps: true }
+)
 
 // Create the Permission model
-const Permission = model("Permission", permissionSchema);
+const Permission = model('Permission', permissionSchema)
 
-export default Permission;
+export default Permission

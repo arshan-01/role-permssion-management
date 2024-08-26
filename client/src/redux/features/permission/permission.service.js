@@ -20,7 +20,6 @@ export const getPermissionById = createAsyncThunk('permissions/getPermissionById
 });
 
 export const createPermission = createAsyncThunk('permissions/createPermission', async (permissionData) => {
-  console.log("🚀 ~ createPermission ~ permissionData:", permissionData)
   return handleResponse(api.post(config.endPoints.createPermission, permissionData));
 });
 

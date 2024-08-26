@@ -1,50 +1,50 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import mongoose from 'mongoose'
+const { Schema, model } = mongoose
 
 const generalSettingSchema = new Schema(
   {
     title: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     colors: {
       type: [String], // Define colors as an array of strings
-      required: true, // Ensure colors is required
+      required: true // Ensure colors is required
     },
     maintenance: {
       type: Boolean,
-      default: false,
+      default: false
     },
     logo: {
       type: String,
-      required: true,
+      required: true
     },
     favicon: {
       type: String,
-      required: true,
+      required: true
     },
     // Additional Settings
     primaryColor: {
       type: String,
-      default: '#000000', // Default color
+      default: '#000000' // Default color
     },
     secondaryColor: {
       type: String,
-      default: '#FFFFFF', // Default color
+      default: '#FFFFFF' // Default color
     },
     logoUrl: {
       type: String,
-      default: '', // URL of the logo
+      default: '' // URL of the logo
     },
     faviconUrl: {
       type: String,
-      default: '', // URL of the favicon
-    },
+      default: '' // URL of the favicon
+    }
   },
   { timestamps: true }
-);
+)
 
-const GeneralSetting = model("GeneralSetting", generalSettingSchema);
+const GeneralSetting = model('GeneralSetting', generalSettingSchema)
 
-export default GeneralSetting;
+export default GeneralSetting

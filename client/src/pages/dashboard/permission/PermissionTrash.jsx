@@ -22,16 +22,6 @@ const PermissionTrash = () => {
     const [totalItems, setTotalItems] = useState(0);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('');
-    const groupPermissionsByModule = () => {
-        return permissions.reduce((acc, { _id, module, actions }) => {
-            acc[module] = { _id, actions };
-            return acc;
-        }, {});
-    };
-
-    const groupedPermissions = groupPermissionsByModule();
-    console.log("🚀 ~ Permissions ~ groupedPermissions:", groupedPermissions)
-
     // Handle the API call to get the permissions list with the updated query parameters
     useDebouncedEffect(
         () => {

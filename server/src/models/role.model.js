@@ -1,30 +1,30 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import mongoose from 'mongoose'
+const { Schema, model } = mongoose
 
 const roleSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     permissions: {
       type: [String], // Define permissions as an array of strings
-      required: true, // Ensure permissions is required
+      required: true // Ensure permissions is required
     },
-    status : {
+    status: {
       type: String,
-      default: "active",
-      enum : ["active", "inactive"]
+      default: 'active',
+      enum: ['active', 'inactive']
     },
     isDeleted: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  { timestamps: true },
-);
+  { timestamps: true }
+)
 
-const Role = model("Role", roleSchema);
+const Role = model('Role', roleSchema)
 
-export default Role;
+export default Role
