@@ -92,10 +92,10 @@ const DataTable = ({
         />
 
         <div>
-          <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-100 text-green-500 hover:bg-gray-200">
+          <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-2 text-green-500 hover:bg-gray-200">
             <IoDownload className="inline" size={20} />
           </button>
-          <button onClick={downloadData} className="p-2 rounded-lg bg-gray-100 text-red-500 hover:bg-gray-200">
+          <button onClick={downloadData} className="p-2 rounded-lg bg-gray-2 text-red-500 hover:bg-gray-200">
             <FaTrash className="inline" size={20} />
           </button>
         </div>
@@ -113,7 +113,7 @@ const DataTable = ({
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-50 rounded-lg shadow-sm">
                 <thead>
-                  <tr className="bg-gray-50 text-left uppercase">
+                  <tr className="bg-gray-1 text-left uppercase">
                     <th className="py-2 px-4 border-b border-gray-200">
                       <input
                         ref={selectAllRef}
@@ -149,7 +149,7 @@ const DataTable = ({
                 </thead>
                 <tbody>
                   {data?.map((row, rowIndex) => (
-                    <tr key={rowIndex} className="hover:bg-gray-50">
+                    <tr key={rowIndex} className="hover:bg-gray-1">
                       <td className="py-2 px-4 border-b border-gray-200">
                         <input
                           type="checkbox"

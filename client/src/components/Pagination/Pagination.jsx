@@ -52,12 +52,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
     <div className="dataTable-bottom flex items-center justify-between border-gray-200 bg-white px-2 py-3">
 <div className='flex justify-around items-center'>
   <div className="items-per-page mr-9 flex items-center">
-    <label htmlFor="items-per-page" className="text-sm text-gray-700">Items per page</label>
+    <label htmlFor="items-per-page" className="text-sm text-gray-7">Items per page</label>
     <select
     id="items-per-page"
     value={itemsPerPage}
     onChange={(e) => handleItemsPerPageChange(Number(e.target.value))} // Convert value to number
-    className=" mx-3 block w-15 py-2 px-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 sm:text-sm"
+    className=" mx-3 block w-15 py-2 px-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-7 bg-white dark:bg-gray-800 dark:text-gray-2 dark:border-gray-600 sm:text-sm"
   >
     {[10, 20, 30, 50].map((option) => (
       <option key={option} value={option}>
@@ -66,7 +66,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
     ))}
   </select>
   </div>
-  <div className="dataTable-info text-sm text-gray-500">
+  <div className="dataTable-info text-sm text-gray-5">
   Showing{' '}
   <span className="font-medium">
     {(currentPage - 1) * itemsPerPage + 1}
@@ -86,7 +86,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-light-gray rounded-md disabled:opacity-50"
+              className="flex items-center justify-center w-8 h-8 text-gray-5 hover:bg-light-gray rounded-md disabled:opacity-50"
             >
               <FaChevronLeft />
             </button>
@@ -95,7 +95,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <li key={index}>
               <button
                 onClick={() => handlePageChange(page)}
-                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-light-gray'} rounded-md`}
+                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary' : 'text-gray-9 ring-1 ring-inset ring-gray-300 hover:bg-light-gray'} rounded-md`}
               >
                 {page === elipse ? '...' : page}
               </button>
@@ -105,7 +105,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="flex items-center justify-center w-8 h-8 text-gray-500 hover:bg-light-gray-100 rounded-md disabled:opacity-50"
+              className="flex items-center justify-center w-8 h-8 text-gray-5 hover:bg-light-gray-100 rounded-md disabled:opacity-50"
             >
               <FaChevronRight />
             </button>

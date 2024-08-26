@@ -25,12 +25,9 @@ module.exports = {
         bodydark2: '#8A99AF',
         primary: '#4F46E5',       // Blue color
         secondary: '#6D28D9',     // Purple color
-        accent: '#FBBF24',        // Yellow color
-        'light-gray': '#f3f4f6',
+        accent: '#FBBF24',  
         stroke: '#343a40',
         graydark: '#333A48',
-        'gray-2': '#F7F9FC',
-        'gray-3': '#FAFAFA',
         whiten: '#F1F5F9',
         whiter: '#F5F7FD',
         boxdark: '#24303F',
@@ -50,6 +47,18 @@ module.exports = {
         success: '#219653',
         danger: '#D34053',
         warning: '#FFA70B',
+        // Custom gray colors
+        gray: {
+          '1': '#F9FAFB',    // White
+          '2': '#edf2f7',    // Light gray
+          '3': '#E5E7EB',    // Light gray
+          '4': '#cbd5e0',    // Medium light gray
+          '5': '#a0aec0',    // Medium gray
+          '6': '#718096',    // Darker gray
+          '7': '#4a5568',    // Dark gray
+          '8': '#2d3748',    // Very dark gray
+          '9': '#1a202c',    // Almost black
+        },
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

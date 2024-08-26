@@ -20,7 +20,7 @@ function StatusBadge({ status, role, action }) {
       active: 'bg-green-600/5 text-green-600 text-sm',
       inactive: 'bg-red-600/5 text-red-600 text-sm',
       pending: 'bg-yellow-600/5 text-yellow-600 text-sm',
-      suspended: 'bg-gray-600/5 text-gray-600 text-sm',
+      suspended: 'bg-gray-600/5 text-gray-6 text-sm',
     };
   // Define styles for action
     const actionStyles = {
@@ -39,7 +39,7 @@ function StatusBadge({ status, role, action }) {
     }
 
     // Fallback to status-based styles if no role is provided
-    return status && statusStyles[status] ? statusStyles[status] : 'bg-gray-600/5 text-gray-600';
+    return status && statusStyles[status] ? statusStyles[status] : 'bg-gray-600/5 text-gray-6';
   };
 
   return (
