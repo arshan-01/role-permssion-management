@@ -61,7 +61,7 @@ function SidebarMenu({ item, userPermissions }) {
                     key={index}
                     as={Link}
                     to={subItem.link}
-                    className={`flex items-center ${isActive(subItem.link) ? 'bg-gray-200' : ''}`}
+                    className={`flex items-center ${isActive(subItem.link) ? 'bg-gray-3' : ''}`}
                     onClick={() => handleSubItemClick(subItem.link)}
                   >
                     <subItem.icon />
@@ -73,7 +73,7 @@ function SidebarMenu({ item, userPermissions }) {
           )}
         </div>
       ) : (
-        <SidebarItem as={Link} to={item.link} className={`flex items-center ${isActive(item.link) ? 'bg-gray-200' : ''}`}>
+        <SidebarItem as={Link} to={item.link} className={`flex items-center ${isActive(item.link) ? 'bg-gray-3' : ''}`}>
           <item.icon />
           <SidebarLabel>{item.label}</SidebarLabel>
         </SidebarItem>

@@ -92,10 +92,10 @@ const DataTable = ({
         />
 
         <div>
-          <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-2 text-green-500 hover:bg-gray-200">
+          <button onClick={downloadData} className="p-2 mx-3 rounded-lg bg-gray-2 text-green-500 hover:bg-gray-3">
             <IoDownload className="inline" size={20} />
           </button>
-          <button onClick={downloadData} className="p-2 rounded-lg bg-gray-2 text-red-500 hover:bg-gray-200">
+          <button onClick={downloadData} className="p-2 rounded-lg bg-gray-2 text-red-500 hover:bg-gray-3">
             <FaTrash className="inline" size={20} />
           </button>
         </div>
