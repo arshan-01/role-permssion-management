@@ -178,9 +178,9 @@ const EditRole = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-1">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">Category</th>
               {predefinedActions.map(action => (
-                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -193,7 +193,7 @@ const EditRole = () => {
                 </th>
               ))}
               {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider">
+                <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -212,7 +212,7 @@ const EditRole = () => {
               <tr key={category}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-9">{category}</td>
                 {predefinedActions.map(action => (
-                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-5">
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-6">
                     {categoriesAndActions[category].includes(action) && (
                       <input
                         type="checkbox"
@@ -224,7 +224,7 @@ const EditRole = () => {
                   </td>
                 ))}
                 {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-5">
+                  <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-6">
                     {categoriesAndActions[category].includes(action) && (
                       <input
                         type="checkbox"
