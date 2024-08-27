@@ -95,7 +95,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
             <li key={index}>
               <button
                 onClick={() => handlePageChange(page)}
-                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary' : 'text-gray-9 ring-1 ring-inset ring-gray-300 hover:bg-gray-2'} rounded-md`}
+                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary hover:bg-primarydark' : 'text-gray-9 ring-1 ring-inset ring-gray-300 hover:bg-primary hover:text-white'} rounded-md`}
               >
                 {page === elipse ? '...' : page}
               </button>

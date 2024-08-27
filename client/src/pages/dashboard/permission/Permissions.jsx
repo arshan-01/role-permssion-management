@@ -19,7 +19,7 @@ const Permissions = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filter, setFilter] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('');
