@@ -25,7 +25,7 @@ module.exports = {
         bodydark2: '#8A99AF',
         primary: '#4F46E5',   
         'primary-light': '#A5B4FC',    // Lighter variant of the primary color    // Blue color
-        primarydark: '#4338CA',     // Darker variant of the primary color
+        'primary-light': '#6366F1',     // Darker variant of the primary color
         secondary: '#2563EB',     // Purple color
         'secondary-light': '#3B82F6',    // Lighter variant of the primary color    // Blue color
         accent: '#FBBF24',  

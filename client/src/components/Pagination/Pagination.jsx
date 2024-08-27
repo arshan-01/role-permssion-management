@@ -81,36 +81,49 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, handl
 </div>
 
       <nav className="dataTable-pagination">
-        <ul className="dataTable-pagination-list flex items-center space-x-2">
-          <li>
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="flex items-center justify-center w-8 h-8 text-gray-5 hover:bg-gray-2 rounded-md disabled:opacity-50"
-            >
-              <FaChevronLeft />
-            </button>
-          </li>
-          {pageNumbers.map((page, index) => (
-            <li key={index}>
-              <button
-                onClick={() => handlePageChange(page)}
-                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${page === currentPage ? 'text-white bg-primary' : 'text-gray-9 ring-1 ring-inset ring-gray-300 hover:bg-gray-2'} rounded-md`}
-              >
-                {page === elipse ? '...' : page}
-              </button>
-            </li>
-          ))}
-          <li>
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="flex items-center justify-center w-8 h-8 text-gray-5 hover:bg-gray-2 rounded-md disabled:opacity-50"
-            >
-              <FaChevronRight />
-            </button>
-          </li>
-        </ul>
+      <ul className="dataTable-pagination-list flex items-center space-x-2">
+  <li>
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+      className={`flex items-center justify-center w-8 h-8 rounded-md ${
+        currentPage !== 1
+          ? 'text-primary hover:bg-primary hover:text-white ring-1 ring-inset ring-primary'
+          : 'text-primary ring-1 ring-inset ring-primary disabled:opacity-100'
+      }`}
+    >
+      <FaChevronLeft />
+    </button>
+  </li>
+  {pageNumbers.map((page, index) => (
+    <li key={index}>
+      <button
+        onClick={() => handlePageChange(page)}
+        className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${
+          page === currentPage
+            ? 'text-white bg-primary hover:bg-primary-light'
+            : 'text-primary ring-1 ring-inset ring-primary hover:bg-primary hover:text-white'
+        } rounded-md`}
+      >
+        {page === elipse ? '...' : page}
+      </button>
+    </li>
+  ))}
+  <li>
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={currentPage === totalPages}
+      className={`flex items-center justify-center w-8 h-8 rounded-md ${
+        currentPage !== totalPages
+         ? 'text-primary hover:bg-primary hover:text-white ring-1 ring-inset ring-primary'
+          : 'text-primary ring-1 ring-inset ring-primary disabled:opacity-100'
+      }`}
+    >
+      <FaChevronRight />
+    </button>
+  </li>
+</ul>
+
       </nav>
     </div>
   );
