@@ -83,7 +83,7 @@ const CreatePermission = () => {
 
       <button
         onClick={handleCreatePermission}
-        className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-blue-700 float-right"
+        className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-primarydark float-right"
       >
         Create Permission
       </button>

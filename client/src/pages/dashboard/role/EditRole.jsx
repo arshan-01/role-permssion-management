@@ -155,7 +155,7 @@ const EditRole = () => {
       />
       <button
         onClick={handleUpdateRole}
-        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 mr-2"
+        className="bg-primary text-white px-4 py-2 rounded-md hover:hover:bg-primarydark mr-2"
       >
         Update Role
       </button>
