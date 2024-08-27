@@ -101,10 +101,10 @@ const Permissions = () => {
                 items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Permissions' }]}
             />
             <div className="flex items-center float-right">
-                {/* <Link to="/dashboard/permission/create" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                {/* <Link to="/dashboard/permission/create" className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-primarydark">
                     Create New
                 </Link> */}
-                <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-blue-600">
+                <button onClick={HaandleCreateRole} className="px-3 py-2 lg:px-4 bg-primary text-white text-sm font-semibold rounded hover:bg-primarydark">
                     Create New
                 </button>
             </div>

@@ -139,7 +139,7 @@ const CreateRole = () => {
           />
           <button
             onClick={handleAddRole}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+            className="bg-primary text-white px-4 py-2 rounded-md hover:hover:bg-primarydark"
           >
             Create Role
           </button>
@@ -149,9 +149,9 @@ const CreateRole = () => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-1">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">Category</th>
             {predefinedActions.map(action => (
-              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -164,7 +164,7 @@ const CreateRole = () => {
               </th>
             ))}
             {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th key={action} className="px-6 py-3 text-left text-xs font-medium text-gray-6 uppercase tracking-wider">
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -183,7 +183,7 @@ const CreateRole = () => {
             <tr key={category}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{category}</td>
               {predefinedActions.map(action => (
-                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-6">
                   {categoriesAndActions[category].includes(action) && (
                     <input
                       type="checkbox"
@@ -195,7 +195,7 @@ const CreateRole = () => {
                 </td>
               ))}
               {actions.filter(action => !predefinedActions.includes(action)).map(action => (
-                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td key={action} className="px-6 py-4 whitespace-nowrap text-sm text-gray-6">
                   {categoriesAndActions[category].includes(action) && (
                     <input
                       type="checkbox"

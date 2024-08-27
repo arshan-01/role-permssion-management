@@ -23,8 +23,11 @@ module.exports = {
         bodydark: '#00639F',
         bodydark1: '#DEE4EE',
         bodydark2: '#8A99AF',
-        primary: '#4F46E5',       // Blue color
-        secondary: '#6D28D9',     // Purple color
+        primary: '#4F46E5',   
+        'primary-light': '#A5B4FC',    // Lighter variant of the primary color    // Blue color
+        primarydark: '#4338CA',     // Darker variant of the primary color
+        secondary: '#2563EB',     // Purple color
+        'secondary-light': '#3B82F6',    // Lighter variant of the primary color    // Blue color
         accent: '#FBBF24',  
         stroke: '#343a40',
         graydark: '#333A48',
