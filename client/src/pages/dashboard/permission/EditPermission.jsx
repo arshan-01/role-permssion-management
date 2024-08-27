@@ -116,7 +116,7 @@ const EditPermission = () => {
 
             <button
                 onClick={handleAddPermission}
-                className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-primarydark float-right"
+                className="bg-primary mt-8 text-white px-6 py-3 rounded-md hover:bg-primary-light float-right"
             >
                 Update Permission
             </button>
