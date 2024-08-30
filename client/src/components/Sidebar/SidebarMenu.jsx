@@ -28,12 +28,12 @@ function SidebarMenu({ item, userPermissions }) {
     subItem.permissions?.every(permission => userPermissions.includes(permission))
   );
 
-  useEffect(() => {
-    // Ensure submenu is open if the active route is a subitem
-    if (item.subItems?.some(subItem => isActive(subItem.link))) {
-      setIsOpen(true);
-    }
-  }, [location.pathname, item.subItems]);
+  // useEffect(() => {
+  //   // Ensure submenu is open if the active route is a subitem
+  //   if (item.subItems?.some(subItem => isActive(subItem.link))) {
+  //     setIsOpen(true);
+  //   }
+  // }, [location.pathname, item.subItems]);
 
   if (!hasPermission) return null;
 
@@ -62,7 +62,7 @@ function SidebarMenu({ item, userPermissions }) {
                     as={Link}
                     to={subItem.link}
                     className={`flex items-center ${isActive(subItem.link) ? 'bg-gray-3' : ''}`}
-                    onClick={() => handleSubItemClick(subItem.link)}
+                    // onClick={() => handleSubItemClick(subItem.link)}
                   >
                     <subItem.icon />
                     <SidebarLabel>{subItem.label}</SidebarLabel>
