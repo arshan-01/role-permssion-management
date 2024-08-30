@@ -61,10 +61,16 @@ const SidebarComponent = () => {
   const [openMenus, setOpenMenus] = useState({}); // Track which menus are open
 
   const toggleMenu = (label) => {
-    setOpenMenus((prevOpenMenus) => ({
-      ...prevOpenMenus,
-      [label]: !prevOpenMenus[label], // Toggle the menu open state
-    }));
+    setOpenMenus((prevOpenMenus) => {
+      const newState = { [label]: !prevOpenMenus[label] }; // Toggle the clicked menu
+      // Close all other menus
+      Object.keys(prevOpenMenus).forEach((key) => {
+        if (key !== label) {
+          newState[key] = false;
+        }
+      });
+      return newState;
+    });
   };
 
   const hasPermission = (permissions) => {
