@@ -1,4 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+  ArrowRightStartOnRectangleIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  Cog8ToothIcon,
+  PlusIcon,
+} from '@heroicons/react/16/solid';
+import {
+  HomeIcon,
+  InboxIcon,
+  MagnifyingGlassIcon,
+  MegaphoneIcon,
+  Square2StackIcon,
+  TicketIcon,
+} from '@heroicons/react/20/solid';
+import { FaCogs, FaPlus, FaThLarge, FaTrash, FaUser } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 import { Avatar } from '../UI/avatar';
 import {
   Dropdown,
@@ -19,86 +36,40 @@ import {
   SidebarSection,
   SidebarSpacer,
 } from '../UI/sidebar';
-import {
-  ArrowRightStartOnRectangleIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  Cog8ToothIcon,
-  LightBulbIcon,
-  PlusIcon,
-  UserIcon,
-} from '@heroicons/react/16/solid';
-import {
-  HomeIcon,
-  InboxIcon,
-  MagnifyingGlassIcon,
-  MegaphoneIcon,
-  QuestionMarkCircleIcon,
-  SparklesIcon,
-  Square2StackIcon,
-  TicketIcon,
-} from '@heroicons/react/20/solid';
 import SidebarMenu from './SidebarMenu'; // Import the new SidebarMenu component
-import { FaCogs, FaPlus, FaThLarge, FaTrash, FaUser } from 'react-icons/fa';
 
-const sidebarItems = [
+const menuItems = [
   {
-    label: "Dashboard",
-    icon: FaThLarge,
-    link: "/",
-    permissions: [],
+    label: 'Roles', icon: <FaCogs />, permissions: ['role-create', 'role-view', 'role-delete'], submenu: [
+      { label: 'View Roles', to: '/dashboard/roles', permission: 'role-view' },
+      { label: 'Create Role', to: '/dashboard/role/create', permission: 'role-create' },
+      { label: 'Trash', to: '/dashboard/roles/trash', permission: 'role-delete' },
+    ]
   },
   {
-    label: "Roles",
-    icon: FaCogs,
-    link: "#",
-    permissions: [],
-    subItems: [
-      {
-        label: "Roles",
-        icon: FaUser,
-        link: "/dashboard/roles",
-        permissions: ["role-view"],
-      },
-      {
-        label: "Create Role",
-        icon: FaPlus,
-        link: "/dashboard/role/create",
-        permissions: ["role-create"],
-      },
-      {
-        label: "Trash",
-        icon: FaTrash,
-        link: "/dashboard/roles/trash",
-        permissions: ["role-delete"],
-      },
-    ],
+    label: 'Permissions', icon: <FaUser />, permissions: ['permission-view', 'permission-delete'], submenu: [
+      { label: 'View Permissions', to: '/dashboard/permissions', permission: 'permission-view' },
+      { label: 'Trash', to: '/dashboard/permissions/trash', permission: 'permission-delete' },
+    ]
   },
-  {
-    label: "Permissions",
-    icon: FaCogs,
-    link: "#",
-    permissions: [],
-    subItems: [
-      {
-        label: "Permissions",
-        icon: FaUser,
-        link: "/dashboard/permissions",
-        permissions: ["permission-view"],
-      },
-      {
-        label: "Trash",
-        icon: FaTrash,
-        link: "/dashboard/permissions/trash",
-        permissions: ["permission-delete"],
-      },
-    ],
-  }
+  // Add more menu items here
 ];
 
-function SidebarComponent() {
-  const userPermissions = ["role-create", "role-view", "role-delete", "permission-create", "permission-view", "permission-delete"
-  ]; // Example permissions for the current user
+const SidebarComponent = () => {
+  const location = useLocation();
+  const userPermissions = ["role-create", "role-view", "role-delete", "permission-create", "permission-view", "permission-delete"];
+  const [openMenus, setOpenMenus] = useState({}); // Track which menus are open
+
+  const toggleMenu = (label) => {
+    setOpenMenus((prevOpenMenus) => ({
+      ...prevOpenMenus,
+      [label]: !prevOpenMenus[label], // Toggle the menu open state
+    }));
+  };
+
+  const hasPermission = (permissions) => {
+    return permissions.some(permission => userPermissions?.includes(permission));
+  };
 
   return (
     <Sidebar>
@@ -142,30 +113,35 @@ function SidebarComponent() {
         </SidebarSection>
       </SidebarHeader>
       <SidebarBody>
-        <SidebarSection>
-          {sidebarItems.map((item, index) => (
-            <SidebarMenu key={index} item={item} userPermissions={userPermissions} />
+      <SidebarSection>
+          {menuItems.map((item, index) => (
+            hasPermission(item.permissions) && (
+              <React.Fragment key={index}>
+                <SidebarItem
+                  onClick={() => toggleMenu(item.label)}
+                  icon={item.icon}
+                  className="cursor-pointer"
+                >
+                  {item.label}
+                  <ChevronDownIcon className={`transition-transform ${openMenus[item.label] ? 'rotate-180' : ''}`} />
+                </SidebarItem>
+
+                {openMenus[item.label] && (
+                  <SidebarSection>
+                    {item.submenu.map((subItem, subIndex) => (
+                      hasPermission([subItem.permission]) && (
+                        <SidebarItem key={subIndex} className={`${location.pathname === subItem.to ? 'bg-gray-200' : ''}`}>
+                          <Link to={subItem.to} className="block w-full h-full">
+                            {subItem.label}
+                          </Link>
+                        </SidebarItem>
+                      )
+                    ))}
+                  </SidebarSection>
+                )}
+              </React.Fragment>
+            )
           ))}
-          <SidebarItem href="/">
-            <HomeIcon />
-            <SidebarLabel>Home</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/events">
-            <Square2StackIcon />
-            <SidebarLabel>Events</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/orders">
-            <TicketIcon />
-            <SidebarLabel>Orders</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/settings">
-            <Cog6ToothIcon />
-            <SidebarLabel>Settings</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/broadcasts">
-            <MegaphoneIcon />
-            <SidebarLabel>Broadcasts</SidebarLabel>
-          </SidebarItem>
         </SidebarSection>
         <SidebarSection className="max-lg:hidden">
           <SidebarHeading>Upcoming Events</SidebarHeading>
@@ -175,16 +151,6 @@ function SidebarComponent() {
           <SidebarItem href="/events/4">We All Look The Same</SidebarItem>
         </SidebarSection>
         <SidebarSpacer />
-        <SidebarSection>
-          <SidebarItem href="/support">
-            <QuestionMarkCircleIcon />
-            <SidebarLabel>Support</SidebarLabel>
-          </SidebarItem>
-          <SidebarItem href="/changelog">
-            <SparklesIcon />
-            <SidebarLabel>Changelog</SidebarLabel>
-          </SidebarItem>
-        </SidebarSection>
       </SidebarBody>
       <SidebarFooter className="max-lg:hidden">
         <Dropdown>
